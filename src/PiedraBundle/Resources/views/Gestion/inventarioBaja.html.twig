@@ -1,0 +1,199 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Inventario en Baja {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {% include 'PiedraBundle:include:header.html.twig' %}
+
+  <!-- END HEADER -->
+  <div class="clearfix"></div>
+  <!-- BEGIN CONTAINER -->
+  <div class="page-container">
+    
+
+  {% include 'PiedraBundle:include:sidebar.html.twig' %}
+
+
+
+  <div class="page-content-wrapper">
+    <div class="page-content">
+      
+      <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+      <!-- BEGIN PAGE HEADER-->
+      <!-- BEGIN PAGE HEAD -->
+      <div class="page-head">
+        
+        
+      </div>
+      <!-- END PAGE HEAD -->
+      
+      <!-- END PAGE HEADER-->
+
+
+      <!-- BEGIN PAGE CONTENT-->
+      
+      <div class="row">
+        <div class="col-md-12">
+          <!-- BEGIN EXAMPLE TABLE PORTLET-->
+          <div class="portlet box blue">
+            <div class="portlet-title">
+              <div class="caption">
+                Inventario en Baja
+              </div>
+              
+            </div>
+            <div class="portlet-body">
+
+            <div class="table-toolbar">
+								<div class="row">	
+
+								
+
+
+									<div class="col-md-6">
+
+									<div class="input-icon">
+										<i class="fa fa-search"></i>
+										<input class="form-control" type="text" id="myInput" placeholder="Buscar Baja">
+									</div>
+										  
+                     
+
+									</div>
+									
+								</div>
+							</div>
+              
+              
+              <div class="scroller"  style="height: 350px;">
+              <table id="table_inventario_baja" class="table table-striped table-hover table-bordered dataTable" >
+                  <thead>
+                  <tr>
+                      <th> No. </th>
+                      <th> AREA</th>
+                      <th> COMPONENTE</th>
+                      <th> MARCA</th>
+                      <th> MODELO</th>
+                      <th> SERIAL</th>
+                      <th> ESTADO</th>
+                      <th> MEDIO BÁSICO </th>
+                      <th> NO. SUBMAYOR </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      
+                      {% for baja in inventarios_baja %}
+
+                        <tr class="tr" data-id="{{ baja.id }}">
+                            <td> {{ baja.id }}</td>
+                            <td> {{ baja.departamento}} </td>
+                            <td> {{ baja.componente }}</td>
+                            <td> {{ baja.marca }}</td>
+                            <td> {{ baja.modelo }}</td>
+                            <td> {{ baja.serial }}</td>
+                            <td> {{ baja.estado }}</td>
+                            <td> {{ baja.medioBasico }}</td>
+                            <td> {{ baja.noSubmayor }}</td>                           
+                           
+                        </tr>
+
+                      {%endfor%}
+
+                  </tbody>
+              </table>  
+              </div>
+            </div>
+          </div>
+          <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+      </div>
+      <!-- END PAGE CONTENT -->
+    </div>
+  </div>
+
+  </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    
+    <script  src="{{asset('bundles/piedra/global/plugins/jquery-tabledit/jquery.tabledit.js')}}"></script>
+
+
+
+    <script type="text/javascript"> 
+
+
+      $('#table_inventario_baja').Tabledit({
+        url: '{{path('inventario_baja')}}',
+        editButton: false,       
+        editmethod: 'post',
+        deletemethod: 'post',
+        buttons: {
+            delete: {
+                class: 'btn btn-sm btn-danger',
+                html: '<span class="glyphicon glyphicon-trash"></span> &nbsp ELIMINAR',
+                action: 'delete'
+            },
+            edit: {
+            class: 'btn btn-sm btn-primary',
+            html: '<span class="glyphicon glyphicon-pencil"></span> &nbsp EDIT',
+            action: 'edit'
+            },
+            save: {
+              class: 'btn btn-sm btn-success',
+              html: 'Save'
+            },
+            restore: {
+              class: 'btn btn-sm btn-warning',
+              html: 'Restore',
+              action: 'restore'
+            },
+            confirm: {
+                class: 'btn btn-sm btn-default',
+                html: 'CONFIRMAR'
+            }
+        },
+
+        columns: {
+          identifier: [0, 'id'],                    
+          editable: [[6, 'estado','select','{"OK":"OK", "ROTO":"ROTO"}']]
+        }, 
+
+
+
+      });
+
+
+      // filtrar tabla
+        $('#myInput').keyup(function(){
+          var that = this, $allListElements = $('.tr');
+          var $matchingListElements = $allListElements.filter(function(i, li){
+          var listItemText = $(li).text().toUpperCase(),
+          searchText = that.value.toUpperCase();
+          return ~listItemText.indexOf(searchText);
+          });
+          $allListElements.hide();
+          $matchingListElements.show();
+        });
+
+
+    </script>
+
+    <!-- END PAGE LEVEL PLUGINS -->
+
+{% endblock %}
+

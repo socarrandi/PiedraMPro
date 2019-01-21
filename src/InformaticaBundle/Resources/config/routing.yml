@@ -1,0 +1,133 @@
+##### gestion de usuarios 
+
+registro:
+  path:  /registro
+  defaults: { _controller: InformaticaBundle:Default:registro }
+
+perfil:
+  path:  /perfil
+  defaults: { _controller: InformaticaBundle:Default:perfil }
+
+usuarios:
+    path:  /usuarios
+    defaults: { _controller: InformaticaBundle:Usuario:usuarios }
+
+  
+
+#### end gestion usuario ###
+
+mastro_general:
+    path:     /mastro_general
+    defaults: { _controller: InformaticaBundle:Default:mastroGeneral }
+
+maestro_tipo_equipo:
+    path:     /maestro_tipo_equipo
+    defaults: { _controller: InformaticaBundle:Default:maestroTipoEquipo }
+
+mastro_pieza:
+    path:     /mastro_pieza
+    defaults: { _controller: InformaticaBundle:Default:mastroPieza }
+
+
+
+#INVENTARIO 
+
+equipo:
+    path:     /equipo
+    defaults: { _controller: InformaticaBundle:Default:equipo }
+
+
+inventario_piezas_equipo:
+    path:     /inventario_piezas_equipo
+    defaults: { _controller: InformaticaBundle:Default:inventarioPiezasEquipo }
+
+
+inventario_pieza_equipo:
+    path:     /inventario_pieza_equipo
+    defaults: { _controller: InformaticaBundle:Default:inventarioPiezaEquipo }
+
+add_pieza_equipo:
+    path:     /add_pieza_equipo
+    defaults: { _controller: InformaticaBundle:Default:addPiezaEquipo }
+
+
+abaco:
+    path:     /abaco
+    defaults: { _controller: InformaticaBundle:Default:abaco }
+
+### LISTADOS ##
+
+movimiento_aft:
+    path:     /movimiento_aft
+    defaults: { _controller: InformaticaBundle:Default:movimientoAft }
+
+movimiento_pieza:
+    path:     /movimiento_pieza
+    defaults: { _controller: InformaticaBundle:Default:movimientoPieza }
+
+
+
+telefono:
+    path:     /telefono
+    defaults: { _controller: InformaticaBundle:Default:telefono }
+
+usuario_dominio:
+    path:     /usuario_dominio
+    defaults: { _controller: InformaticaBundle:Default:usuarioDominio }
+
+
+################# exportar ########
+exportar_inventario:
+    path:     /exportar_inventario
+    defaults: { _controller: InformaticaBundle:Exportar:exportarInventario }
+
+exportar_movimiento_aft:
+    path:    /exportar_movimiento_aft
+    defaults: { _controller: InformaticaBundle:Exportar:exportarMovimientoAft }
+
+exportar_dictamen_aft:
+    path:    /exportar_dictamen_aft
+    defaults: { _controller: InformaticaBundle:Exportar:exportarDictamenAft }
+
+exportar_expediente_tecnico:
+    path:    /exportar_expediente_tecnico
+    defaults: { _controller: InformaticaBundle:Exportar:exportarExpedienteTecnico }
+
+exportar_expediente_tecnico_pc:
+    path:    /exportar_expediente_tecnico_pc
+    defaults: { _controller: InformaticaBundle:Exportar:exportarExpedienteTecnicoPc }
+
+exportar_solicitud_asignacion_serv_inf:
+    path:     /exportar_solicitud_asignacion_serv_inf
+    defaults: { _controller: InformaticaBundle:Exportar:exportarSolicitudAsignacionServInf }
+
+exportar_listado_nominal_usuario:
+    path:     /exportar_listado_nominal_usuario
+    defaults: { _controller: InformaticaBundle:Exportar:exportarListadoNominalUsuario }
+
+
+
+
+
+############ Nomencladores ##########
+
+equipo_aprobado:
+    path:     /equipo_aprobado
+    defaults: { _controller: InformaticaBundle:Nomenclador:equipoAprobado }
+
+
+
+
+##### ruta de zun ####
+
+prueba:
+  path:  /prueba
+  defaults: { _controller: InformaticaBundle:Zun:prueba }
+
+conexion_db:
+  path:  /conexion_db
+  defaults: { _controller: InformaticaBundle:Zun:conexionDb }
+
+cargar_areas_aft:
+  path:  /cargar_areas_aft
+  defaults: { _controller: InformaticaBundle:Zun:cargarAreasAFT }

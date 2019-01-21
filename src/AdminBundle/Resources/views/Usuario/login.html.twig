@@ -1,0 +1,167 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Login {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+     <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/admin/pages/css/login-soft.css')}}"/>
+
+    
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+<div class="logo">
+	<a href="index.html">
+	<img src="../../assets/admin/layout4/img/logo-big.png" alt="">
+	</a>
+</div>
+<div class="menu-toggler sidebar-toggler">
+</div>
+
+ <div class="content">
+	<!-- BEGIN LOGIN FORM -->
+	<form method="post" action="{{ path('check_path') }}" id="login" class="login-form" novalidate="novalidate">
+
+		 
+		<h3 class="form-title">Login</h3>
+		  {% if error %}
+                            <div class="alert alert-danger display-hide">
+                                <button class="close" data-close="alert"></button>
+                        <span>
+                            <div class="error">{{ error.message }}</div>
+                        </span>
+                            </div>
+                        {% endif %}
+
+		<div class="form-group">
+			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+			<label class="control-label visible-ie8 visible-ie9">Usuario</label>
+			<div class="input-icon">
+				<i class="fa fa-user"></i>
+				<input class="form-control placeholder-no-fix" type="text" placeholder="Username" name="_username" autofocus="autofocus" value="{{last_username}}"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Contraseña</label>
+			<div class="input-icon">
+				<i class="fa fa-lock"></i>
+				<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="_password"/>
+			</div>
+		</div>
+		<div class="form-actions">
+			<label class="checkbox">
+			<input type="checkbox" name="_remember_me"/> Recordar</label>
+			<button type="submit" class="btn blue pull-right">
+			Login <i class="m-icon-swapright m-icon-white"></i>
+			</button>
+		</div>
+		<div class="create-account">
+			<p>
+				 No se a registrado todavia? &nbsp; <a href="javascript:;" id="register-btn">
+				Registrarse </a>
+			</p>
+		</div>
+		
+	</form>
+	<!-- END LOGIN FORM -->
+	
+	<!-- BEGIN REGISTRATION FORM -->
+	<form class="register-form" action="{{path('registro')}}" method="post" accept-charset="utf-8">
+		<h3>Registrar Usuario</h3>
+		<p>
+			 Entre sus datos personales
+		</p>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Nombre y Apellidos</label>
+			<div class="input-icon">
+				<i class="fa fa-font"></i>
+				<input class="form-control placeholder-no-fix" type="text" placeholder="Nombre y Apellidos" name="fullname"/>
+			</div>
+		</div>		
+	
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Usuario</label>
+			<div class="input-icon">
+				<i class="fa fa-user"></i>
+				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Contraseña</label>
+			<div class="input-icon">
+				<i class="fa fa-lock"></i>
+				<input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Password" name="password"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Repetir Contraseña</label>
+			<div class="controls">
+				<div class="input-icon">
+					<i class="fa fa-check"></i>
+					<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Password" name="rpassword"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-actions">
+			<button id="register-back-btn" type="button" class="btn">
+			<i class="m-icon-swapleft"></i> Átras </button>
+			<button type="submit" id="register-submit-btn" class="btn blue pull-right">
+			Registrar <i class="m-icon-swapright m-icon-white"></i>
+			</button>
+		</div>
+	</form>
+	<!-- END REGISTRATION FORM -->
+</div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+     <script  type="text/javascript" src="{{asset('bundles/piedra/global/plugins/jquery-validation/js/jquery.validate.min.js')}}"></script>
+      <script  type="text/javascript" src="{{asset('bundles/piedra/global/plugins/backstretch/jquery.backstretch.min.js')}}"></script>
+       <script  type="text/javascript" src="{{asset('bundles/piedra/global/plugins/select2/select2.min.js')}}"></script>
+    
+ 	
+
+    <!-- END PAGE LEVEL PLUGINS -->
+
+{% endblock %}
+
+ {% block jsend %} 
+
+ <script  type="text/javascript" src="{{asset('bundles/piedra/admin/pages/scripts/login-soft.js')}}"></script>
+
+
+ <script>
+ 		
+		jQuery(document).ready(function() {     
+		
+		  Login.init();
+		       // init background slide images
+		       $.backstretch([
+		        "{{asset('bundles/piedra/admin/pages/media/bg/1.jpg')}}",
+		        "{{asset('bundles/piedra/admin/pages/media/bg/2.jpg')}}",
+		        "{{asset('bundles/piedra/admin/pages/media/bg/3.jpg')}}",
+		        "{{asset('bundles/piedra/admin/pages/media/bg/4.jpg')}}",
+		        ], {
+		          fade: 1000,
+		          duration: 8000
+		    }
+		    );
+		});
+
+ 	</script>
+
+
+ {% endblock %}
+
+

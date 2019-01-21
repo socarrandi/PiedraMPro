@@ -1,0 +1,313 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}RRHH - Listado Contratos {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+   	 <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css')}}"/>
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+
+	
+
+{% block body %}
+
+  {% include 'PiedraBundle:include:header.html.twig' %}
+
+  <!-- END HEADER -->
+  <div class="clearfix"></div>
+  <!-- BEGIN CONTAINER -->
+  <div class="page-container">
+    
+
+  {% include 'PiedraBundle:include:sidebar.html.twig' %}
+
+
+
+  <div class="page-content-wrapper">
+    <div class="page-content">
+      
+      <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+      <!-- BEGIN PAGE HEADER-->
+      <!-- BEGIN PAGE HEAD -->
+      <div class="page-head">
+        
+        
+      </div>
+      <!-- END PAGE HEAD -->
+      
+      <!-- END PAGE HEADER-->
+
+
+      <!-- BEGIN PAGE CONTENT-->
+      
+      <div class="row">
+        <div class="col-md-12">
+          <!-- BEGIN EXAMPLE TABLE PORTLET-->
+          <div class="portlet box blue">
+            <div class="portlet-title">
+              <div class="caption">
+                Listado de Contrato
+              </div>
+              
+            </div>
+            <div class="portlet-body">
+             	<div class="table-toolbar">
+					<div class="row">
+						<div class="col-md-6">
+							<a href="{{path('adicionar_contrato')}}" class="btn green"> Crear Contrato <i class="fa fa-plus"></i></a>
+                <a href="{{path('exportar_contratos')}}" class="btn yellow"> Exportar Contrato <i class="fa fa-file-excel-o"></i></a>
+						</div>									
+					</div>
+				</div>		
+              
+
+              <table id="table_contrato" class="table table-striped table-hover table-bordered dataTable" >
+                  <thead>
+                  <tr>
+                      
+                      <th> Editar / Exportar </th>
+                      <th> No. Contrato </th>
+                      <th> Fecha </th>
+                      <th> Nombre y Apellidos </th>
+                      <th> Carnet Identidad</th>
+                      <th> Sexo</th>
+                      <th> Nivel Escolar </th>
+                      <th> Dirección Particular</th>
+                      <th> Municipio </th>
+                      <th> Provincia </th>
+                      <th> Teléfono </th>
+                      <th> Área de Trabajo </th>
+                      <th> Tipo de Contrato </th>
+                      <th> Cargo  </th>
+                      <th> Categoría Ocupación </th>
+                      <th> Grupo Escala </th>
+                      <th> Duración del Contrato Determinado (años) </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                      
+                      {% for c in contratos %}
+
+                        <tr>                        
+                        <td> 
+
+                          <div class="btn-group">
+                        <a class="btn  green" href="{{path('editar_contrato',{'IdContrato': c.id })}}" data-original-title="Editar Contacto"> <i class="fa fa-edit"></i>  </a>
+
+                        <a target="_blank"  class="btn yellow" href="{{path('exportar_contrato',{'IdContrato': c.id})}}" data-original-title="Exportar Contrato"> <i class="fa fa-file-pdf-o"></i> </a>
+                      </div>
+
+                        </td>
+                        <td> {{ c.noContrato }} </td>
+	                      <td> {{ c.fecha | date('d-m-Y')}} </td>
+	                      <td> {{ c.nombre }} </td>
+	                      <td> {{ c.ci }}</td>
+	                      <td> {{ c.sexo }}</td>
+	                      <td> {{ c.nivelEscolar.abr }} </td>
+	                      <td> {{ c.direccion }}</td>
+	                      <td> {{ c.municipio }} </td>
+	                      <td> {{ c.provincia }} </td>
+	                      <td> {{ c.telefono }} </td>
+	                      <td> {{ c.areaTrabajo }} </td>
+	                      <td> {{ c.tipoContrato.abr }} </td>
+	                      <td> {{ c.cargo }}  </td>
+	                      <td> {{ c.categoriaOcupacional.abr }} </td>
+	                      <td> {{ c.grupoEscala }}</td>
+	                      <td> {{ c.duracionContrato }} </td>                         
+                           
+                        </tr>
+
+                      {%endfor%}
+
+                  </tbody>
+              </table>  
+
+            </div>
+          </div>
+          <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+      </div>
+      <!-- END PAGE CONTENT -->
+    </div>
+  </div>
+
+  </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script  src="{{asset('bundles/piedra/global/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+    <script  src="{{asset('bundles/piedra/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js')}}"></script>
+    <script  src="{{asset('bundles/piedra/global/plugins/bootstrap-daterangepicker/moment.min.js')}}"></script>
+    
+    <script type="text/javascript"> 
+
+
+    $('#addDatos').click(function(){
+       var idC = 0;
+       idC = $('span.checked').find('input').val();
+       alert(idC);
+    });
+
+
+    var TableManaged = function () {
+
+    var initTable1 = function () {
+
+        var table = $('#table_contrato');
+
+        // begin first table
+        table.dataTable({
+
+            // Internationalisation. For more info refer to http://datatables.net/manual/i18n
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "No data available in table",
+                "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                "infoEmpty": "No entries found",
+                "infoFiltered": "(filtered1 from _MAX_ total entries)",
+                "lengthMenu": "Show _MENU_ entries",
+                "search": "Search:",
+                "zeroRecords": "No matching records found"
+            },
+
+          
+
+            "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+
+             "columns": [
+            {
+                "orderable": true
+            }, {
+                "orderable": false
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            },
+            {
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            },
+            {
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": true
+            }
+            ],
+
+            
+            "lengthMenu": [
+                [5, 15, 20, -1],
+                [5, 15, 20, "All"] // change per page values here
+            ],
+            // set the initial value
+            "pageLength": 5,            
+            "pagingType": "bootstrap_full_number",
+            "language": {
+                "search": "My search: ",
+                "lengthMenu": "  _MENU_ records",
+                "paginate": {
+                    "previous":"Prev",
+                    "next": "Next",
+                    "last": "Last",
+                    "first": "First"
+                }
+            },
+            "columnDefs": [{  // set default column settings
+                'orderable': true,
+                'targets': [0]
+            }, {
+                "searchable": false,
+                "targets": [0]
+            }],
+            "order": [
+                [1, "asc"]
+            ] // set first column as a default sort by asc
+        });
+
+         var tableWrapper = jQuery('#sample_1_wrapper');
+
+        table.find('.group-checkable').change(function () {
+            var set = jQuery(this).attr("data-set");
+            var checked = jQuery(this).is(":checked");
+            jQuery(set).each(function () {
+                if (checked) {
+                    $(this).attr("checked", true);
+                    $(this).parents('tr').addClass("active");
+                } else {
+                    $(this).attr("checked", false);
+                    $(this).parents('tr').removeClass("active");
+                }
+            });
+            jQuery.uniform.update(set);
+        });
+
+        table.on('change', 'tbody tr .checkboxes', function () {
+            $(this).parents('tr').toggleClass("active");
+        });
+
+        tableWrapper.find('.dataTables_length select').addClass("form-control input-xsmall input-inline"); // modify table per page dropdown
+
+    }
+
+	return {
+
+	        //main function to initiate the module
+	        init: function () {
+	            if (!jQuery().dataTable) {
+	                return;
+	            }
+
+	            initTable1();
+	        }
+
+	    };
+
+	}();
+
+
+	jQuery(document).ready(function() {       
+	
+	   TableManaged.init();
+	});
+
+    </script>
+
+    <!-- END PAGE LEVEL PLUGINS -->
+
+
+
+
+{% endblock %}
+

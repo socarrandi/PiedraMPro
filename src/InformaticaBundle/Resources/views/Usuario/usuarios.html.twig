@@ -1,0 +1,480 @@
+{% extends '::base_pro.html.twig' %}
+
+{% block title %} Usuarios {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}"/>
+    
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/horizontal/css/pages/floating-label.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/css/footable.standalone.min.css')}}"/>
+
+
+  <!-- select css -->
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/select2/dist/css/select2.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/switchery/dist/switchery.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-select/bootstrap-select.min.css')}}"/>
+
+  <!--alerts CSS -->
+  <link href="{{asset('bundles/informatica/adminpro/assets/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/css/jquery-confirm.css')}}"/>
+  
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {{ include('InformaticaBundle:include:preloder.html.twig', {'loader_label':'Listados de Usuarios' } ) }}
+
+  {% include 'InformaticaBundle:include:header.html.twig' %}
+  {% include 'InformaticaBundle:include:aside.html.twig' %}
+
+
+  <div class="page-wrapper" style="min-height: 502px;">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        {{ include('InformaticaBundle:include:page_titles.html.twig', {'titulo_pagina':'Usuarios', 'session': 'Informática' } ) }}                          
+                        
+    <div class="row">
+          
+
+          <!-- MODAL EDITOR movimiento aft -->
+          <div class="modal fade" id="editor-usuarios" tabindex="-1" role="dialog" aria-labelledby="editor-usuarios-title">
+  
+          <div class="modal-dialog" role="document">
+            <form class="modal-content form-horizontal form-usuarios" id="form-usuarios">
+              <div class="modal-header">
+                
+                <h4 class="modal-title" id="editor-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">
+                <input type="number" id="id" name="id" hidden="hidden" />
+                
+                
+                <div class="row   m-t-20">
+
+                    <div class="form-material col-md-12 col-xs-12">        
+                      <label for="name">NOMBRE Y APELLIDOS:</label>                         
+                      <input type="text" class="form-control" id="name" name="name" required />                    
+                    </div>
+
+                    <div class="form-material col-md-12 col-xs-12 m-t-10">        
+                      <label for="username">USUARIO:</label>                         
+                      <input type="text" class="form-control" id="username" name="username" required />                    
+                    </div>
+
+                    <div class="form-material col-md-12 col-xs-12 m-t-10">
+                        <label for="email">CORREO ELECTRÓNICO: </label>
+                        <input id="email" name="email" class="form-control" type="email"> 
+                    </div>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <div class="form-material required col-md-12 col-xs-12 m-t-10">
+                      <label for="unidad">SELECIONE LA UNIDAD:</label>
+                      <select class="selectpicker"  data-live-search="true" id="unidad" name="unidad" required>   
+                      {% for u in unidades %}  
+                          <option data-id="({{u.codigo}}) {{u.unidad}}" value="{{u.id}}"> ({{u.codigo}}) {{u.unidad}} </option>                      
+                      {% endfor %}   
+                      </select>                    
+                    </div>
+                    {% endif %}
+
+                   {# <div class="form-group required col-md-12 col-xs-12 m-t-10">
+                      <label for="role">SELECIONE LOS ROLES DEL USUARIO:</label>
+                      <select class="selectpicker" multiple data-live-search="true" id="role" name="role" required>   
+                      {% for r in roles %}  
+                          <option data-id="{{r.name}}" value="{{r.id}}"> {{ r.name }} </option>                      
+                      {% endfor %}   
+                      </select>                    
+                    </div> #}
+
+                    <div class="form-material col-md-12 col-xs-12 m-t-10">        
+                      <label for="fecha_nac">FECHA NACIMIENTO:</label>                         
+                      <input type="text" class="form-control date-picker" id="fecha_nac" name="fecha_nac" required />                    
+                    </div>
+
+              </div>
+
+              <div class="row form-material  m-t-20">
+                <div class="form-group col-md-6 col-xs-12">
+                  <label for="password">CONTRASEÑA:</label>
+                  <input type="password" class="form-control" id="password" name="password"  required>                      
+                </div>
+                <div class="form-group col-md-6 col-xs-12">       
+                  <label for="repetir_password">REPETIR CONTRASEÑA:</label>                          
+                  <input type="password" class="form-control" data-validation-match-match="password" id="repetir_password" name="repetir_password" required>                 
+                  
+                </div>
+              </div>
+
+              <div class="input-group col-md-12 col-xs-12 m-t-10">
+                  <ul class="icheck-list">
+                      <li>
+                          <input type="checkbox" class="check" id="estado" data-checkbox="icheckbox_square-red">
+                          <label for="estado">ACTIVAR USUARIO:</label>
+                         
+                      </li>                                
+                  </ul>  
+              </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>        
+            </form>          
+          </div>  
+        </div>
+        <!-- end MODAL EDITOR movimiento aft-->
+
+
+
+
+         
+        
+
+
+    </div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+          <div class="card">            
+            <div class="card-body">  
+              <div class="d-flex">                  
+                <h4 id="card-title-mov" class="card-title"> <span class="lstick"></span>LISTADO USUARIOS : {{app.user.unidad.ueb}} : ({{app.user.unidad.codigo}}) {{app.user.unidad.unidad}}</h4>
+              </div>
+              <table id="table_usuarios" class="table table-hover table_usuarios"  data-paging="true" data-filtering="true" data-sorting="true" >  
+
+              </table>  
+                           
+            </div>
+          </div>
+
+            
+        </div>
+      </div>     
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+     {% include 'InformaticaBundle:include:footer.html.twig' %}
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+  </div>
+
+  
+  
+
+  </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/moment/moment.js')}}"></script> 
+
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script> 
+
+     <!--Custom JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/horizontal/js/custom.min.js')}}"></script>
+
+    <!-- Select -->   
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/switchery/dist/switchery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/select2/dist/js/select2.full.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+
+
+    <!-- Validate -->
+    <script type="text/javascript"  src="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-validation/js/jquery.validate.min.js')}}"></script>
+    <script type="text/javascript"  src="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-validation/js/additional-methods.min.js')}}"></script>
+             
+
+    <!-- Footable -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/js/footable.min.js')}}"></script>
+
+
+
+    
+    <!-- Sweet-Alert  -->
+    <script src="{{asset('bundles/informatica/adminpro/assets/plugins/sweetalert/sweetalert.min.js')}}"></script> 
+    <script  src="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/js/jquery-confirm.js')}}"></script>
+
+
+
+    <script type="text/javascript" charset="utf-8" async defer>
+
+
+
+    $(window).on('load', function() {  
+      //global
+      $(".selectpicker").selectpicker(); 
+      $('.date-picker').bootstrapMaterialDatePicker({ weekStart: 0, time: false, format: 'DD-MM-YYYY'});       
+             
+      unidad = {{app.user.unidad.id}};
+      activo = null; 
+      role_admin = false; 
+
+      {% if is_granted('ROLE_INFORMATICA') %}
+        role_admin = true
+      {% endif %}
+          
+      usuarios(unidad, activo);          
+
+          function usuarios(tabla, baja){
+          var $modal = $('#editor-usuarios'),
+          $editor = $('#form-usuarios'),
+          $editorTitle = $('#editor-title'),
+          ft = FooTable.init('#table_usuarios', {
+          
+            columns: [
+                  {"name":"id","title":"ID", "type":"number"},
+                  {"name":"name","title":"NOMBRE", },
+                  {"name":"username","title":"USUARIO"},                  
+                  {"name":"unidad","title":"UNIDAD","breakpoints":"xs sm"},
+                  {"name":"id_unidad","visible": false},
+                  {"name":"active","visible": false},
+                  {"name":"edad","title":"EDAD", "type":"number","breakpoints":"xs sm"},
+                  {"name":"fecha_nac","visible": false},
+                  {"name":"rol","title":"ROLES", "breakpoints":"xs sm"},
+                  {"name":"roles","visible": false},
+                  {"name":"estado","title":"ESTADO", "breakpoints":"all"},
+                  {"name":"fecha_inicio","title":"FECHA INICIO",  "breakpoints":"all"},
+                  {"name":"fecha_mod","title":"FECHA MOD",  "breakpoints":"all"} ,
+                  {"name":"email","title":"CORREO",  "breakpoints":"all"}                
+
+              ],
+              rows: $.post('{{path('usuarios')}}', { 'action': 'cargar_usarios', 'unidad': unidad, 'activo': activo, 'role_admin':role_admin }).fail(function () { alerta_error();}),
+               filtering: {
+                  enabled: true,
+                  placeholder: "Buscar Usuario.."
+
+                },               
+              editing: {
+                enabled: true, 
+                editText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span>', 
+                addText: '<span class="mdi mdi-lead-pencil" aria-hidden="true">Adicionar Usuario</span>',  
+                deleteText: '<span class="mdi mdi-delete-forever" aria-hidden="true"></span>',
+                showText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span> Editar Usuario', 
+                addRow: function(){
+                  $modal.removeData('row');
+                  $editor[0].reset();
+
+                  $("#password").attr('required');
+                  $("#repetir_password").attr('required');                  
+
+                  $editorTitle.text('Adicionar Usuario');
+                  $("#estado").parents('div.icheckbox_square-red').removeClass('checked');
+                  $modal.modal('show');
+                },                
+                editRow: function(row){
+                  var values = row.val();
+
+                  $("#password").removeAttr('required');
+                  $("#repetir_password").removeAttr('required');
+                  
+                  $editor.find('#id').val(values.id);
+                  $editor.find('#name').val(values.name);
+                  $editor.find('#username').val(values.username);
+                  $editor.find('#unidad').val(values.id_unidad);
+                  $editor.find('#fecha_nac').val(values.fecha_nac);
+                  $editor.find('#email').val(values.email);
+
+                  $('select[name=role]').val(values.roles); 
+                  $("select[name=role]").selectpicker("refresh");
+
+                  $('select[name=unidad]').val(values.id_unidad); 
+                  $("select[name=unidad]").selectpicker("refresh");
+
+                  if(values.active == 1){                    
+                    $("#estado").parents('div.icheckbox_square-red').addClass('checked');
+                  }else{
+                    $("#estado").parents('div.icheckbox_square-red').removeClass('checked');
+                  }
+
+                  $modal.data('row', row);
+                  $editorTitle.text('Editar Usuarios ');
+                  $modal.modal('show');
+                },
+                deleteRow: function(row){
+
+                     swal({   
+                            title: "Eliminar Usuario!",   
+                            text: "Seguro desea eliminar el Eliminar Usuario?",   
+                            type: "warning",   
+                            showCancelButton: true,   
+                            confirmButtonColor: "#DD6B55",   
+                            confirmButtonText: "Si, Eliminar!",   
+                            cancelButtonText: "No, Cancelar!",   
+                            closeOnConfirm: false,   
+                            closeOnCancel: false 
+                        }, function(isConfirm){   
+                            if (isConfirm) {    
+
+                                var values = row.val();  
+                                $.post('{{path('usuarios')}}', { 'action': 'eliminar_usuario', 'id': values.id  })
+                                        .done(function (d) {  
+                                          row.delete();
+
+                                          swal({   
+                                                title: "Eliminar!",   
+                                                text: "Se eliminó correctamente el Usuario!",  
+                                                type:"success", 
+                                                timer: 2500,   
+                                                showConfirmButton: false 
+                                            });   
+
+                                        }).fail(function () {
+                                          alerta_error();
+                                      }); 
+                               
+                               
+                            } else {    
+                                
+                                swal({   
+                                    title: "Cancelar!",   
+                                    text: "Eliminar Usuario fue cancelado!",  
+                                    type:"error", 
+                                    timer: 2500,   
+                                    showConfirmButton: false 
+                                });
+                            } 
+                        });                    
+                }
+              }
+          });
+
+          $editor.on('submit', function(e){
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+
+                active = ($("#estado").parents('div').hasClass('icheckbox_square-red checked') == true)?1:0;
+
+                var nombre_unidad =$("select#unidad option[value='"+$editor.find('#unidad').val()+"']").attr('data-id');
+
+                var row = $modal.data('row'),
+                values = {
+                  id: $editor.find('#id').val(), 
+                  name: $editor.find('#name').val(),                      
+                  username: $editor.find('#username').val(),
+                  password: $editor.find('#password').val(), 
+                  repetir_password: $editor.find('#repetir_password').val(), 
+                  active: active,
+                  estado: (active == 1)?'<span class="label label-success"> ACTIVO </span>': '<span class="label label-danger">INACTIVO</span>' ,
+                  fecha_nac: $editor.find('#fecha_nac').val(),
+                  id_unidad: $editor.find('#unidad').val()?$editor.find('#unidad').val():null,
+                  unidad: nombre_unidad,
+                  email: $editor.find('#email').val(),
+                };
+
+                var exite = false;
+                $.post('{{path('usuarios')}}', { 'action': 'check_username', 'username': values.username }).done(function(d){
+
+                  exite = d;
+
+                }).fail(function () { alerta_error();});
+
+
+                if(exite == 'true'){
+                  
+                  swal({
+                      title: "Mensaje!",   
+                      text: "El usuario ya existe!", 
+                      type: "warning",   
+                      timer: 3000,   
+                      showConfirmButton: false                      
+                  });
+
+                }else if (values.password === values.repetir_password){
+
+                  if (row instanceof FooTable.Row){
+                  row.val(values);   
+                  $.post('{{path('usuarios')}}', { 'action': 'editar_usuario', 'usuario': values }).fail(function () { alerta_error();});
+
+                  }else{
+
+                    //adicionar usuarios
+                    $.post('{{path('usuarios')}}', { 'action': 'add_usuario', 'usuario': values }).done(function(data){
+
+                        values.id = data['id']; 
+                        values.edad = data['edad'];
+                        values.rol = data['roles'];   
+                        values.fecha_mod = data['fecha_mod'];  
+                        values.fecha_inicio =  data['fecha_inicio'];
+                        values.unidad = data['unidad']                    
+                        ft.rows.add(values);
+
+                  }).fail(function () { alerta_error();});
+
+                  } 
+                  $modal.modal('hide');
+
+                }else {
+                  
+                  swal({
+                      title: "Mensaje!",   
+                      text: "No coinciden las contraseñas!", 
+                      type: "warning",   
+                      timer: 3000,   
+                      showConfirmButton: false                      
+                  });
+
+                }
+                
+          });
+          }
+
+
+
+
+
+       
+
+        function alerta_error(){
+
+          swal({
+                      title: "Mensaje!",   
+                      text: "Algo salió mal, por favor vuelva a intentarlo!", 
+                      type: "error",   
+                      timer: 3000,   
+                      showConfirmButton: false                      
+                  });         
+        }
+
+
+        
+        // end document
+      });  
+        
+
+
+
+   </script>
+
+
+
+{% endblock %}
+

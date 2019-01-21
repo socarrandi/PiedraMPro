@@ -1,0 +1,42 @@
+home:
+  path:  /
+  defaults: { _controller: PiedraBundle:Default:home }
+
+login:
+  path:  /login
+  defaults: { _controller: InformaticaBundle:Usuario:login }
+
+check_path:
+  path:  /check
+
+logout:
+  path:  /logout
+
+
+
+gaviota:
+  resource: "@InformaticaBundle/Resources/config/routing.yml"
+  prefix:   /gaviota
+
+informatica:
+  resource: "@InformaticaBundle/Resources/config/routing.yml"
+  prefix:   /informatica
+
+rrhh:
+  resource: "@RRHHBundle/Resources/config/routing.yml"
+  prefix:   /rrhh
+
+piedra:
+  resource: "@PiedraBundle/Resources/config/routing.yml"
+  prefix:   /admin
+
+
+
+# administracion 
+
+maestro_general_pro:
+    path:     /admin/maestro_general_pro
+    defaults: { _controller: InformaticaBundle:Default:maestroGeneralPro }
+
+
+

@@ -1,0 +1,600 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Bajas Usuario Dominio{% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/bootstrap-select/bootstrap-select.min.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/select2/select2.css')}}"/>
+
+     <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/bootstrap-datepicker/css/datepicker3.css')}}"/>
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {% include 'PiedraBundle:include:header.html.twig' %}
+
+  <!-- END HEADER -->
+  <div class="clearfix"></div>
+  <!-- BEGIN CONTAINER -->
+  <div class="page-container">
+    
+
+  {% include 'PiedraBundle:include:sidebar.html.twig' %}
+
+  <div class="page-content-wrapper">
+    <div class="page-content">
+      <!-- BEGIN  MODAL Adicionar Departamento-->
+      <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+        <div class="modal-dialog">
+
+        <form role="form" action="{{path('gestionar_usuario_dominio')}}" role="from" method="post" accept-charset="utf-8">
+
+        	<input type="text" name="baja" value="baja" hidden="hidden"/>
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+              <h4 class="modal-title">Adicionar Usuario Dominio</h4>
+            </div>
+            <div class="modal-body">               
+                <div class="form-body">
+               	
+
+                <div class="form-group form-md-line-input">
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Escribe el Nombre y Apellidos ...">
+                    <span class="help-block">Escribe el Nombre ...</span>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <input type="text" class="form-control" id="p_apellido" name="p_apellido" placeholder="Escribe el Primer Apellido ...">
+                    <span class="help-block">Escribe el Primer Apellido ...</span>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <input type="text" class="form-control" id="s_apellido" name="s_apellido" placeholder="Escribe el Segundo Apellido ...">
+                    <span class="help-block">Escribe el Segundo Apellido ...</span>
+                </div>
+
+                <div class="form-group form-md-line-input">
+                    <input type="text" class="form-control" maxlength="11" id="ci" name="ci" placeholder="Escribe CI ...">
+                    <span class="help-block">Escribe CI ...</span>
+                </div>
+               
+                <div class="row">
+                <div class="form-group">                	
+                	<label class="control-label col-md-3" >Selecione el Correo:</label>
+                	<div class="col-md-9">
+                    <select class="form-control select2me" id="email" name="email">                            
+                        {% for e in emails %}
+                            <option value="{{ e.id }}"> {{ e.email }}</option>
+                        {% endfor%} 
+                    </select> 
+                    </div>         
+	            </div>
+	            </div>
+	            <div class="row">
+                <div class="form-group">
+                	<label class="control-label col-md-3" >Selecione el Cargo:</label>
+                	<div class="col-md-9">
+                    <select class="form-control select2me" id="cargo" name="cargo">                            
+                        {% for c in cargos %}
+                            <option value="{{ c.id }}"> {{ c.cargo }}</option>
+                        {% endfor%} 
+                    </select>                     
+	                </div>
+	            </div>
+	            </div>
+	            <div class="row">	            
+	        	
+	        	<div class="form-group">
+	        		<label class="control-label col-md-3" >Selecione el Usuario Red:</label>
+                	<div class="col-md-9">
+                    <select class="form-control select2me" id="usuario_red" name="usuario_red">
+                        {% for u in usuario_reds %}
+                            <option value="{{ u.id }}"> {{ u.usuario }}</option>
+                        {% endfor %} 
+                    </select>                     
+	                </div>
+	            </div>
+	            </div>
+				<div class="row">
+	            <div class="form-group form-md-line-input">
+	            	<label class="control-label col-md-3" >Selecione la Fecha Creado:</label>
+                    <input type="text" class="form-control form-control-inline input-medium date-picker" maxlength="11" id="fecha" name="fecha" placeholder="Selecione fecha">
+                    <span class="help-block">Selecione Fecha ...</span>
+                </div>
+           		</div>
+
+	            </br>
+				
+
+				<div class="form-group form-md-checkboxes">
+					<label>Navegación, Correo, FTP y CHAT:</label>
+					<div class="md-checkbox-inline">
+						<div class="md-checkbox ">
+							<input type="checkbox" id="nav_nacional" name="nav_nacional" class="md-check">
+							<label for="nav_nacional">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Navegación Nacional </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="nav_internet" name="nav_internet" class="md-check">
+							<label for="nav_internet">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Navegación Internet </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="email_nacional" name="email_nacional" class="md-check">
+							<label for="email_nacional">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Correo Nacional </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="email_internet" name="email_internet" class="md-check">
+							<label for="email_internet">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Correo Internet </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="ftp" name="ftp" class="md-check" checked>
+							<label for="ftp">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							FTP </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="chat" name="chat" class="md-check" checked>
+							<label for="chat">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							CHAT </label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group form-md-checkboxes">
+					<label>Sistemas:</label>
+					<div class="md-checkbox-inline">
+						<div class="md-checkbox ">
+							<input type="checkbox" id="zunAcc" name="zunAcc" class="md-check">
+							<label for="zunAcc">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							ZUN ACC </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="zunAft" name="zunAft" class="md-check">
+							<label for="zunAft">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							ZUN AFT </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="zunUtil" name="zunUtil" class="md-check">
+							<label for="zunUtil">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							ZUN ÚTIL </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="zunPms" name="zunPms" class="md-check">
+							<label for="zunPms">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							ZUN PMS </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="zunPos" name="zunPos" class="md-check">
+							<label for="zunPos">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							ZUN POS </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="zunStock" name="zunStock" class="md-check" >
+							<label for="zunStock">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							ZUN STOCK </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="abacoNomina" name="abacoNomina" class="md-check" >
+							<label for="abacoNomina">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							ABACO NÓMINA </label>
+						</div>
+
+						<div class="md-checkbox ">
+							<input type="checkbox" id="habitat" name="habitat" class="md-check" >
+							<label for="habitat">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							HÁBITAT </label>
+						</div>
+
+						<div class="md-checkbox ">
+							<input type="checkbox" id="sarh" name="sarh" class="md-check" >
+							<label for="sarh">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							SARH </label>
+						</div>
+
+						<div class="md-checkbox ">
+							<input type="checkbox" id="aListar" name="aListar" class="md-check" >
+							<label for="aListar">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							@Listar </label>
+						</div>
+
+						<div class="md-checkbox ">
+							<input type="checkbox" id="sstt" name="sstt" class="md-check" >
+							<label for="sstt">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							SSTT </label>
+						</div>
+
+						<div class="md-checkbox ">
+							<input type="checkbox" id="reservas" name="reservas" class="md-check" >
+							<label for="reservas">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Reservas </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="compras" name="compras" class="md-check" >
+							<label for="compras">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							Compras </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="inHova" name="inHova" class="md-check" >
+							<label for="inHova">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							InHova </label>
+						</div>
+						<div class="md-checkbox ">
+							<input type="checkbox" id="aInformatica" name="aInformatica" class="md-check" >
+							<label for="aInformatica">
+							<span></span>
+							<span class="check"></span>
+							<span class="box"></span>
+							@Informatica </label>
+						</div>
+					</div>
+				</div>
+
+                </div>
+                  </br>
+               
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn blue">Adicionar</button> 
+
+             
+              <button type="button" class="btn default" data-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- BEGIN PAGE CONTENT-->
+      
+      <div class="row">
+        <div class="col-md-12">
+          <!-- BEGIN EXAMPLE TABLE PORTLET-->
+          <div class="portlet box blue">
+            <div class="portlet-title">
+              <div class="caption">
+               Bajas Usuarios del Dominio
+              </div>
+              
+            </div>
+            <div class="portlet-body">
+              <div class="table-toolbar">
+                <div class="row">
+                <div class="col-md-6">
+                    <div class="btn-group">
+                      <a href="#modal" data-toggle="modal" class="btn green">
+                      Adicionar Usuario Dominio Baja <i class="fa fa-plus"></i>
+                      </a>
+                    </div>
+                    {# <div class="btn-group">
+                      <a href="{{path('exportar_listado_nominal_usuario')}}" target="_blank" data-toggle="modal" class="btn yellow">
+                      Exportar Listado Usuario Dominio Baja<i class="fa fa-plus"></i>
+                      </a>
+                    </div> #}
+                </div>
+
+                  <div class="col-md-6">
+                    <div class="input-icon">
+                    <i class="fa fa-search"></i>
+                    <input class="form-control" type="text" id="myInput" placeholder="Buscar Usuario Dominio">
+                  </div>
+                  </div>
+                  
+                </div>
+              </div>
+              
+	        <div class="scroller"  style="height: 300px;">
+	          <table id="table_usuario_dominio" class="table table-striped table-hover table-bordered dataTable" >
+	              <thead>
+	              <tr>
+	                  <th> No. </th>
+	                  <th> Nombre y Apellidos</th>	 
+	                  <th> Cargo </th>   
+	                  <th> CI </th>
+	                  <th> Usuario Red </th>
+	                  <th> Nav. Nacional </th>
+	                  <th> Nav. Internet </th>
+	                  <th> Email Nacional </th>
+	                  <th> Email Internat </th>
+	                  <th> FTP </th>
+	                  <th> CHAT </th>	                  
+	                  <th> Observación </th>  
+	                  <th> Exportar</th>           `        
+	              </tr>
+	              </thead>
+	              <tbody>
+	                  
+	                  {% for u in usuario_dominios %}
+
+	                    <tr data-id="{{ u.id }}" class="tr">
+	                        <td> {{ u.id }}</td>
+	                        <td> {{ u }} </td> 
+	                        <td> {{ u.cargo }} </td>	
+	                        <td> {{ u.ci }}</td>                                              
+	                        <td> {{ u.usuarioRed}} </td> 	                         
+	                        {% if u.navNacional == true %} 
+	                        	<td>
+	                        	<input class="checkbox" type="checkbox" data-id="navNacional" id="{{u.id}}" checked> </label>
+	                        	</td>	                            
+							{% else %}
+								<td>
+	                        	<input class="checkbox" type="checkbox" data-id="navNacional" id="{{u.id}}"> </label>
+	                        	</td>
+							{%endif%}
+
+							 {% if u.navInternet == true %} 
+	                        	<td>
+	                        	<input class="checkbox" type="checkbox" data-id="navInternet" id="{{u.id}}" checked> </label>
+	                        	</td>	                            
+							{% else %}
+								<td>
+	                        	<input class="checkbox" type="checkbox" data-id="navInternet" id="{{u.id}}" > </label>
+	                        	</td>
+							{%endif%}
+
+							 {% if u.emailNacional == true %} 
+	                        	<td>
+	                        	<input class="checkbox" type="checkbox" data-id="emailNacional" id="{{u.id}}" checked> </label>
+	                        	</td>	                            
+							{% else %}
+								<td>
+	                        	<input class="checkbox" type="checkbox" data-id="emailNacional" id="{{u.id}}" > </label>
+	                        	</td>
+							{%endif%}
+
+							 {% if u.emailInternet == true %} 
+	                        	<td>
+	                        	<input class="checkbox" type="checkbox" data-id="emailInternet" id="{{u.id}}" checked> </label>
+	                        	</td>	                            
+							{% else %}
+								<td>
+	                        	<input class="checkbox" type="checkbox" data-id="emailInternet" id="{{u.id}}" > </label>
+	                        	</td>
+							{%endif%}
+
+							 {% if u.ftp == true %} 
+	                        	<td>
+	                        	<input class="checkbox" type="checkbox" data-id="ftp" id="{{u.id}}" checked> </label>
+	                        	</td>	                            
+							{% else %}
+								<td>
+	                        	<input class="checkbox" type="checkbox" data-id="ftp" id="{{u.id}}"> </label>
+	                        	</td>
+							{%endif%}
+
+							 {% if u.chat == true %} 
+	                        	<td>
+	                        	<input class="checkbox" type="checkbox" data-id="chat" id="{{u.id}}" checked> </label>
+	                        	</td>	                            
+							{% else %}
+								<td>
+	                        	<input class="checkbox" type="checkbox" data-id="chat" id="{{u.id}}" > </label>
+	                        	</td>
+							{%endif%}
+
+	                        <td> {{ u.observacion }} </td>
+	                        <td> <a href="{{path('exportar_solicitud_asignacion_serv_inf', {idUd: u.id})}}" target="_blank" data-toggle="modal" class="btn-sm btn yellow">
+                       <i class="fa  fa-file-word-o "></i>
+                      </a></td>  
+
+	                    </tr>
+
+	                  {%endfor%}
+
+	              </tbody>
+	          </table>
+	      	</div>
+            </div>
+          </div>
+          <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+      </div>
+
+      <!-- END PAGE CONTENT -->
+    </div>
+  </div>
+
+  </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script  src="{{asset('bundles/piedra/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+    <script  src="{{asset('bundles/piedra/global/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+    <script  src="{{asset('bundles/piedra/global/plugins/select2/select2.min.js')}}"></script>
+    
+    <script  src="{{asset('bundles/piedra/global/plugins/jquery-tabledit/jquery.tabledit.js')}}"></script>
+    <script  src="{{asset('bundles/piedra/global/plugins/jquery.input-ip-address-control-1.0.min.js')}}"></script>
+
+
+
+    <script type="text/javascript"> 
+
+    $(".checkbox").change(function(){
+    	var check = $(this).parent('span').attr('class');
+    	var id = $(this).attr('id');
+    	var action = $(this).attr('data-id');    	
+    	
+    	$.ajax({
+    		type: 'POST',
+    		url: "{{path('usuario_dominio_checkbox_ajax')}}",
+    		data:{
+    			'id': id,
+    			'action': action,
+    			'check': check
+    		},success: function(data){
+    			console.log(data);
+    		}
+    	});
+    });	
+
+    $('.ipv4').ipAddress();   
+
+
+    $(document).ready(function(){
+
+
+    	 $('.date-picker').datepicker({
+                rtl: Metronic.isRTL(),
+                orientation: "left",
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+            });
+
+        var usuario_red;      
+
+        $.ajax({
+          type: 'POST',
+          url: '{{ path('lista_usuario_red_ajax')}}',
+          success: function(datos){
+
+	            usuario_red = '{' ; var cont = 0;
+	            for (var i=0; i < datos['usuario_red'].length ; i++){	              
+	               cont++;
+	                if(cont == datos['usuario_red'].length){
+	                    usuario_red += '"'+datos['usuario_red'][i]['id']+'": "'+datos['usuario_red'][i]['usuario']+'"}';
+	                }else{
+	                    usuario_red += '"'+datos['usuario_red'][i]['id']+'": "'+datos['usuario_red'][i]['usuario']+'",';
+	                }
+	            }   
+
+
+	            if (usuario_red == '{'){ usuario_red = '{"0": "seleccione usuario red:"}' }              
+	             
+
+				$('#table_usuario_dominio').Tabledit({
+				    url: '{{path('baja_usuario_dominio')}}',
+				    editButton: false,       
+				    editmethod: 'post',
+				    deletemethod: 'post',
+				    confirmText : 'Aceptar',
+				    buttons: {
+				        delete: {
+				            class: 'btn btn-sm btn-danger',
+				            html: '<span class="glyphicon glyphicon-trash"></span> &nbsp ELIMINAR',
+				            action: 'delete'
+				        },
+				        edit: {
+				        class: 'btn btn-sm btn-primary',
+				        html: '<span class="glyphicon glyphicon-pencil"></span> &nbsp EDIT',
+				        action: 'edit'
+				        },
+				        save: {
+				          class: 'btn btn-sm btn-success',
+				          html: 'Save'
+				        },
+				        restore: {
+				          class: 'btn btn-sm btn-warning',
+				          html: 'Restore',
+				          action: 'restore'
+				        },
+				        confirm: {
+				            class: 'btn btn-sm btn-default',
+				            html: 'CONFIRMAR'
+				        }
+				    },
+
+				    columns: {
+				      identifier: [0, 'id'],                    
+				      editable: [[1, 'nombre'], [3,'ci'], [4, 'usuario_red', 'select' , usuario_red ],[11, 'observacion']]
+				    }, 
+				});
+			}
+		});
+
+    });
+
+
+       // filtrar tabla
+	    $('#myInput').keyup(function(){
+				var that = this, $allListElements = $('.tr');
+				var $matchingListElements = $allListElements.filter(function(i, li){
+				var listItemText = $(li).text().toUpperCase(),
+				searchText = that.value.toUpperCase();
+				return ~listItemText.indexOf(searchText);
+				});
+				$allListElements.hide();
+				$matchingListElements.show();
+		});
+
+
+    </script>
+
+    <!-- END PAGE LEVEL PLUGINS -->
+
+{% endblock %}
+

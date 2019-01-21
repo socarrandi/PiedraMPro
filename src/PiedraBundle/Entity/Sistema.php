@@ -1,0 +1,588 @@
+<?php
+
+namespace PiedraBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Sistema
+ *
+ * @ORM\Table(name="sistema")
+ * @ORM\Entity(repositoryClass="PiedraBundle\Repository\SistemaRepository")
+ */
+class Sistema
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**     
+     *@ORM\ManyToOne(targetEntity="PiedraBundle\Entity\UsuarioDominio")
+     *@ORM\JoinColumn(name="usuario_dominio_id", referencedColumnName="id", onDelete="CASCADE")
+     **/
+    private $usuarioDominio;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="zunAcc", type="boolean")
+     */
+    private $zunAcc;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="zunAft", type="boolean")
+     */
+    private $zunAft;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="zunUtil", type="boolean")
+     */
+    private $zunUtil;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="aListar", type="boolean")
+     */
+    private $aListar;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="zunPms", type="boolean")
+     */
+    private $zunPms;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="zunPos", type="boolean")
+     */
+    private $zunPos;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="zunStock", type="boolean")
+     */
+    private $zunStock;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="zunIcs", type="boolean")
+     */
+    private $zunIcs;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="abacoNomina", type="boolean")
+     */
+    private $abacoNomina;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="habitat", type="boolean")
+     */
+    private $habitat;
+
+     /**
+     * @var bool
+     *
+     * @ORM\Column(name="sarh", type="boolean")
+     */
+    private $sarh;
+
+     /**
+     * @var bool
+     *
+     * @ORM\Column(name="sstt", type="boolean")
+     */
+    private $sstt;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="reservas", type="boolean")
+     */
+    private $reservas;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="compras", type="boolean")
+     */
+    private $compras;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="inHova", type="boolean")
+     */
+    private $inHova;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="aInformatica", type="boolean")
+     */
+    private $aInformatica;
+
+
+
+
+
+
+    public function __construct(){
+        $this->zunAcc = false;
+        $this->zunAft = false;
+        $this->zunUtil = false;
+        $this->zunPms = false;
+        $this->zunPos = false;
+        $this->zunStock = false;
+        $this->zunIcs = false;
+        $this->abacoNomina = false;
+        $this->habitat = false;
+        $this->sarh = false;
+        $this->aListar = false;
+        $this->sstt = false;
+        $this->reservas = false;
+        $this->compras = false;
+        $this->inHova = false;
+        $this->aInformatica = false;
+    }
+
+
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    
+
+    /**
+     * Set zunAcc
+     *
+     * @param boolean $zunAcc
+     *
+     * @return Sistema
+     */
+    public function setZunAcc($zunAcc)
+    {
+        $this->zunAcc = $zunAcc;
+
+        return $this;
+    }
+
+    /**
+     * Get zunAcc
+     *
+     * @return boolean
+     */
+    public function getZunAcc()
+    {
+        return $this->zunAcc;
+    }
+
+    /**
+     * Set zunAft
+     *
+     * @param boolean $zunAft
+     *
+     * @return Sistema
+     */
+    public function setZunAft($zunAft)
+    {
+        $this->zunAft = $zunAft;
+
+        return $this;
+    }
+
+    /**
+     * Get zunAft
+     *
+     * @return boolean
+     */
+    public function getZunAft()
+    {
+        return $this->zunAft;
+    }
+
+    /**
+     * Set zunPms
+     *
+     * @param boolean $zunPms
+     *
+     * @return Sistema
+     */
+    public function setZunPms($zunPms)
+    {
+        $this->zunPms = $zunPms;
+
+        return $this;
+    }
+
+    /**
+     * Get zunPms
+     *
+     * @return boolean
+     */
+    public function getZunPms()
+    {
+        return $this->zunPms;
+    }
+
+    /**
+     * Set zunPos
+     *
+     * @param boolean $zunPos
+     *
+     * @return Sistema
+     */
+    public function setZunPos($zunPos)
+    {
+        $this->zunPos = $zunPos;
+
+        return $this;
+    }
+
+    /**
+     * Get zunPos
+     *
+     * @return boolean
+     */
+    public function getZunPos()
+    {
+        return $this->zunPos;
+    }
+
+    /**
+     * Set zunStock
+     *
+     * @param boolean $zunStock
+     *
+     * @return Sistema
+     */
+    public function setZunStock($zunStock)
+    {
+        $this->zunStock = $zunStock;
+
+        return $this;
+    }
+
+    /**
+     * Get zunStock
+     *
+     * @return boolean
+     */
+    public function getZunStock()
+    {
+        return $this->zunStock;
+    }
+
+    /**
+     * Set abacoNomina
+     *
+     * @param boolean $abacoNomina
+     *
+     * @return Sistema
+     */
+    public function setAbacoNomina($abacoNomina)
+    {
+        $this->abacoNomina = $abacoNomina;
+
+        return $this;
+    }
+
+    /**
+     * Get abacoNomina
+     *
+     * @return boolean
+     */
+    public function getAbacoNomina()
+    {
+        return $this->abacoNomina;
+    }
+
+    /**
+     * Set habitat
+     *
+     * @param boolean $habitat
+     *
+     * @return Sistema
+     */
+    public function setHabitat($habitat)
+    {
+        $this->habitat = $habitat;
+
+        return $this;
+    }
+
+    /**
+     * Get habitat
+     *
+     * @return boolean
+     */
+    public function getHabitat()
+    {
+        return $this->habitat;
+    }
+
+    /**
+     * Set sarh
+     *
+     * @param boolean $sarh
+     *
+     * @return Sistema
+     */
+    public function setSarh($sarh)
+    {
+        $this->sarh = $sarh;
+
+        return $this;
+    }
+
+    /**
+     * Get sarh
+     *
+     * @return boolean
+     */
+    public function getSarh()
+    {
+        return $this->sarh;
+    }
+
+    /**
+     * Set usuarioDominio
+     *
+     * @param \PiedraBundle\Entity\UsuarioDominio $usuarioDominio
+     *
+     * @return Sistema
+     */
+    public function setUsuarioDominio(\PiedraBundle\Entity\UsuarioDominio $usuarioDominio = null)
+    {
+        $this->usuarioDominio = $usuarioDominio;
+
+        return $this;
+    }
+
+    /**
+     * Get usuarioDominio
+     *
+     * @return \PiedraBundle\Entity\UsuarioDominio
+     */
+    public function getUsuarioDominio()
+    {
+        return $this->usuarioDominio;
+    }
+
+    /**
+     * Set zunUtil
+     *
+     * @param boolean $zunUtil
+     *
+     * @return Sistema
+     */
+    public function setZunUtil($zunUtil)
+    {
+        $this->zunUtil = $zunUtil;
+
+        return $this;
+    }
+
+    /**
+     * Get zunUtil
+     *
+     * @return boolean
+     */
+    public function getZunUtil()
+    {
+        return $this->zunUtil;
+    }
+
+    /**
+     * Set aListar
+     *
+     * @param boolean $aListar
+     *
+     * @return Sistema
+     */
+    public function setAListar($aListar)
+    {
+        $this->aListar = $aListar;
+
+        return $this;
+    }
+
+    /**
+     * Get aListar
+     *
+     * @return boolean
+     */
+    public function getAListar()
+    {
+        return $this->aListar;
+    }
+
+    /**
+     * Set sstt
+     *
+     * @param boolean $sstt
+     *
+     * @return Sistema
+     */
+    public function setSstt($sstt)
+    {
+        $this->sstt = $sstt;
+
+        return $this;
+    }
+
+    /**
+     * Get sstt
+     *
+     * @return boolean
+     */
+    public function getSstt()
+    {
+        return $this->sstt;
+    }
+
+    /**
+     * Set reservas
+     *
+     * @param boolean $reservas
+     *
+     * @return Sistema
+     */
+    public function setReservas($reservas)
+    {
+        $this->reservas = $reservas;
+
+        return $this;
+    }
+
+    /**
+     * Get reservas
+     *
+     * @return boolean
+     */
+    public function getReservas()
+    {
+        return $this->reservas;
+    }
+
+    /**
+     * Set compras
+     *
+     * @param boolean $compras
+     *
+     * @return Sistema
+     */
+    public function setCompras($compras)
+    {
+        $this->compras = $compras;
+
+        return $this;
+    }
+
+    /**
+     * Get compras
+     *
+     * @return boolean
+     */
+    public function getCompras()
+    {
+        return $this->compras;
+    }
+
+    /**
+     * Set inHova
+     *
+     * @param boolean $inHova
+     *
+     * @return Sistema
+     */
+    public function setInHova($inHova)
+    {
+        $this->inHova = $inHova;
+
+        return $this;
+    }
+
+    /**
+     * Get inHova
+     *
+     * @return boolean
+     */
+    public function getInHova()
+    {
+        return $this->inHova;
+    }
+
+    /**
+     * Set aInformatica
+     *
+     * @param boolean $aInformatica
+     *
+     * @return Sistema
+     */
+    public function setAInformatica($aInformatica)
+    {
+        $this->aInformatica = $aInformatica;
+
+        return $this;
+    }
+
+    /**
+     * Get aInformatica
+     *
+     * @return boolean
+     */
+    public function getAInformatica()
+    {
+        return $this->aInformatica;
+    }
+
+    /**
+     * Set zunIcs
+     *
+     * @param boolean $zunIcs
+     *
+     * @return Sistema
+     */
+    public function setZunIcs($zunIcs)
+    {
+        $this->zunIcs = $zunIcs;
+
+        return $this;
+    }
+
+    /**
+     * Get zunIcs
+     *
+     * @return boolean
+     */
+    public function getZunIcs()
+    {
+        return $this->zunIcs;
+    }
+}

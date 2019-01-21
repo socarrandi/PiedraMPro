@@ -1,0 +1,582 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}RRHH - Adicionar Contrato {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/select2/select2.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/bootstrap-datepicker/css/datepicker3.css')}}"/>
+
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {% include 'PiedraBundle:include:header.html.twig' %}
+
+  <!-- END HEADER -->
+  <div class="clearfix"></div>
+  <!-- BEGIN CONTAINER -->
+  <div class="page-container">
+    
+
+  {% include 'PiedraBundle:include:sidebar.html.twig' %}
+
+
+
+  <div class="page-content-wrapper">
+    <div class="page-content">
+      <!-- BEGIN PAGE CONTENT-->
+      
+      <div class="row">
+        <div class="col-md-12">
+					<!-- BEGIN VALIDATION STATES-->
+					<div class="portlet box green">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-"></i>Crear Contrato al Trabajador
+							</div>
+							<div class="tools">
+								<a href="javascript:;" class="collapse">
+								</a>
+								<a href="#portlet-config" data-toggle="modal" class="config">
+								</a>
+								<a href="javascript:;" class="reload">
+								</a>
+								<a href="javascript:;" class="remove">
+								</a>
+							</div>
+						</div>
+						<div class="portlet-body form">
+							<!-- BEGIN FORM-->
+							<form action="{{ path('adicionar_contrato')}}" id="form_contrato" class="form-horizontal" method="post">
+								<div class="form-body">
+									
+									<div class="alert alert-danger display-hide">
+										<button class="close" data-close="alert"></button>
+										Usted tiene algunos errores. Por favor verifique a continuación
+									</div>
+									<div class="alert alert-success display-hide">
+										<button class="close" data-close="alert"></button>
+										¡Su validación de formulario es exitosa!
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Fecha Inicio <span class="required">
+										* </span></label> 
+										<div class="col-md-4">
+											<div class="input-group date date-picker" data-date-format="dd-mm-yyyy">
+												<input type="text" class="form-control date-picker" id="fecha" name="fecha" placeholder="Selecione fecha">
+												<span class="input-group-btn">
+												<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+												</span>
+											</div>
+											<!-- /input-group -->
+											<span class="help-block">
+											seleccione la fecha </span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">No. Contrato <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<input readonly="" value="{{ no_contrato }}"  type="text" name="no_contrato" id="no_contrato" data-required="1" class="form-control"/>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Nombre y Apellidos <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" name="nombre" id="nombre" data-required="1" class="form-control"/>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Carnet de Identidad<span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" name="ci" id="ci" maxlength="11" minlength="11" data-required="1" class="form-control"/>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Sexo <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<div class="radio-list" data-error-container="#form_2_sexo_error">
+												<label>
+												<input type="radio" name="sexo" value="M"/>
+												Masculino </label>
+												<label>
+												<input type="radio" name="sexo" value="F"/>
+												Femenino </label>
+											</div>
+											<div id="form_2_sexo_error">
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Nivel Escolar <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<select class="form-control select2me" name="nivel_escolar" id="nivel_escolar">
+												<option value="">Selecione el Nivel Escolar</option>
+												
+												{% for ne in nivel_escolar %}
+													<option value="{{ne.id}}">{{ ne.abr }} - {{ ne.nivel}}</option>
+
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Dirección Particular <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<textarea type="text" name="direccion" id="direccion" data-required="1" class="form-control"> </textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Municipio <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<select class="form-control select2me" name="municipio" id="municipio">
+												<option value="">Selecione el Municipios</option>
+
+												{% for p in municipios %}
+													<optgroup label=" {{ p.provincia }} ">
+													{% for m in p.municipio %}
+														<option value="{{m.id}}"> {{ m.municipio }}</option>
+													{% endfor %}											
+												{% endfor %}												
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Teléfono <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" name="telefono" id="telefono" data-required="1" class="form-control"/>
+										</div>
+									</div>
+
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Área de Trabajo <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<select class="form-control select2me" name="area_trabajo" id="area_trabajo">
+												<option value="">Selecione Área de Trabajo</option>
+												
+												{% for a in areas_trabajo %}
+													<option value="{{a.id}}">{{ a.area }}</option>
+
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Tipo de Contrato <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<select class="form-control select2me" name="tipo_contrato" id="tipo_contrato">
+												<option value="">Selecione Tipo Contrato</option>
+												
+												{% for tc in tipos_contrato %}
+													<option value="{{tc.id}}"> {{ tc.abr}} - {{ tc.tipo }}</option>
+
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Cargo <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<select class="form-control select2me" name="cargo" id="cargo">
+												<option value="">Selecione Cargo</option>
+												
+												{% for c in cargos %}
+													<option value="{{c.id}}">{{ c.cargo }}</option>
+
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Categoría Ocupación <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<select class="form-control select2me" name="categoria_ocupacion" id="categoria_ocupacion">
+												<option value="">Selecione Categoría</option>
+												
+												{% for c in categorias_ocupacion %}
+													<option value="{{c.id}}">{{ c.abr }} - {{ c.categoria }}</option>
+
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Grupo Escala <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<select class="form-control select2me" name="grupo_escala" id="grupo_escala">
+												<option value="">Selecione Grupo Escala</option>
+												
+												{% for ge in grupos_escala %}
+													<option value="{{ge.id}}"> {{ ge.grupo }}</option>
+
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">Duración del Contrato Determinado (años) <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<input type="text" maxlength="2" name="duracion_contrato" id="duracion_contrato" data-required="1" class="form-control"/>
+										</div>
+									</div>									
+									
+									{# <div class="form-group">
+										<label class="control-label col-md-3">Membership <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<div class="radio-list" data-error-container="#form_2_membership_error">
+												<label>
+												<input type="radio" name="membership" value="1"/>
+												Fee </label>
+												<label>
+												<input type="radio" name="membership" value="2"/>
+												Professional </label>
+											</div>
+											<div id="form_2_membership_error">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-3">Services <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<div class="checkbox-list" data-error-container="#form_2_services_error">
+												<label>
+												<input type="checkbox" value="1" name="service"/> Service 1 </label>
+												<label>
+												<input type="checkbox" value="2" name="service"/> Service 2 </label>
+												<label>
+												<input type="checkbox" value="3" name="service"/> Service 3 </label>
+											</div>
+											<span class="help-block">
+											(select at least two) </span>
+											<div id="form_2_services_error">
+											</div>
+										</div>
+									</div>#}
+								
+								</div>
+								<div class="form-actions">
+									<div class="row">
+										<div class="col-md-offset-3 col-md-9">
+											<button type="submit" class="btn green">Adicionar Contrato</button>
+											<button type="reset" class="btn default">Cancelar</button>
+										</div>
+									</div>
+								</div>
+							</form>
+							<!-- END FORM-->
+						</div>
+						<!-- END VALIDATION STATES-->
+					</div>
+				</div>
+      </div>
+      <!-- END PAGE CONTENT -->
+    </div>
+  </div>
+
+  </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    
+    <script type="text/javascript"  src="{{asset('bundles/piedra/global/plugins/jquery-tabledit/jquery.tabledit.js')}}"></script>
+    <script type="text/javascript"  src="{{asset('bundles/piedra/global/plugins/jquery.input-ip-address-control-1.0.min.js')}}"></script>
+    <script type="text/javascript"  src="{{asset('bundles/piedra/global/plugins/jquery-validation/js/jquery.validate.min.js')}}"></script>
+    <script type="text/javascript"  src="{{asset('bundles/piedra/global/plugins/jquery-validation/js/additional-methods.min.js')}}"></script>
+	<script  src="{{asset('bundles/piedra/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+	<script  src="{{asset('bundles/piedra/global/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js')}}"></script>
+    <script  src="{{asset('bundles/piedra/global/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+    <script  src="{{asset('bundles/piedra/global/plugins/select2/select2.min.js')}}"></script>
+
+    <script > 
+
+    	
+
+
+    var FormValidation = function () {
+  
+    var handleValidation3 = function() {
+
+            var form3 = $('#form_contrato');
+            var error3 = $('.alert-danger', form3);
+            var success3 = $('.alert-success', form3);            
+
+            form3.validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block help-block-error', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                ignore: "", // validate all fields including form hidden input
+                rules: {
+                	no_contrato: {                        
+                        required: true,
+                        number: true,
+                        remote:{
+                                url: "{{ path('checked_no_contrato')}}",
+                                type:"POST",
+                                data:{
+                                   	no_contrato: function (){
+                                       return $("#no_contrato").val();
+                                	},
+                                	action:'adicionar'
+                            }
+
+                        }
+                    },
+                    nombre: {
+                        minlength: 2,
+                        required: true
+                    },
+                    fecha: {
+                        required: true
+                    },
+                    ci: {
+                        minlength: 11,
+                        required: true,
+                        number: true
+                    },                     
+                    sexo: {
+                        required: true
+                    },
+                    nivel_escolar: {
+                        required: true
+                    },
+                    direccion: {
+                    	 minlength: 15,
+                        required: true
+                    },
+                    municipio: {
+                        required: true
+                    },
+                    telefono: {
+                        minlength: 6,
+                        required: true
+                    },
+                    area_trabajo: {
+                        required: true
+                    },
+                    tipo_contrato: {
+                        required: true
+                    },
+                    cargo: {
+                        required: true
+                    },
+                    categoria_ocupacion: {
+                        required: true
+                    },
+                    grupo_escala: {
+                        required: true
+                    },
+                    duracion_contrato: {
+                        maxlength: 2,
+                        required: true,
+                        number: true
+                    },
+                },
+
+                messages: { // custom messages for radio buttons and checkboxes
+                	ci:{
+                	    required: "Porfavor escribe el CI",
+                	    minlength: 'Porfavor el CI es de 11 Número',
+                	    number: 'Sólo Número'
+                	},
+                	no_contrato:{
+                	    required: "Porfavor escribe el No. Contrato",
+                	    remote: "Existe un contrato con este Número",
+                	    number: 'Sólo Número'
+                	},
+                    nombre: {
+                        required: "Por favor escribe bien su nombre"
+                    },
+                    sexo: {
+                        required: "Selecione el sexo"
+                    },
+                    nivel_escolar: {
+                        required: "Selecion de Nivel Escolar"
+                    },
+                    direccion: {
+                        required: "Escribe la Dirección Particular",
+                        minlength: "Por favor, no cumple con la cantidad de letras"
+                    },
+                    municipio: {
+                        required: "Selecione el Municipio de la Provincia"                        
+                    },
+                    telefono: {
+                        required: "Por favor, escribe el Teléfono",
+                        minlength: "Por favor, un # teléfono es como minimo 8 Números"
+                    },
+                    area_trabajo: {
+                        required: "Selecione el Área de Trabajo"
+                    },
+                    tipo_contrato: {
+                        required: "Selecione el Tipo Contrato"
+                    },
+                    cargo: {
+                        required: "Selecione el Cargo"
+                    },
+                    categoria_ocupacion: {
+                        required: "Selecione la Categoria Ocupación"
+                    },
+                    grupo_escala: {
+                        required: "Selecione el Grupo Escala"
+                    },
+                    duracion_contrato:{
+                	    required: "Por favor, escribe la Duración del Contrato en años",                	    
+                	    number: 'Sólo Número'
+                	},
+                },
+
+                errorPlacement: function (error, element) { // render error placement for each input type
+                    if (element.parent(".input-group").size() > 0) {
+                        error.insertAfter(element.parent(".input-group"));
+                    } else if (element.attr("data-error-container")) { 
+                        error.appendTo(element.attr("data-error-container"));
+                    } else if (element.parents('.radio-list').size() > 0) { 
+                        error.appendTo(element.parents('.radio-list').attr("data-error-container"));
+                    } else if (element.parents('.radio-inline').size() > 0) { 
+                        error.appendTo(element.parents('.radio-inline').attr("data-error-container"));
+                    } else if (element.parents('.checkbox-list').size() > 0) {
+                        error.appendTo(element.parents('.checkbox-list').attr("data-error-container"));
+                    } else if (element.parents('.checkbox-inline').size() > 0) { 
+                        error.appendTo(element.parents('.checkbox-inline').attr("data-error-container"));
+                    } else {
+                        error.insertAfter(element); // for other inputs, just perform default behavior
+                    }
+                },
+
+                invalidHandler: function (event, validator) { //display error alert on form submit   
+                    success3.hide();
+                    error3.show();
+                    Metronic.scrollTo(error3, -200);
+                },
+
+                highlight: function (element) { // hightlight error inputs
+                   $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                unhighlight: function (element) { // revert the change done by hightlight
+                    $(element)
+                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                },
+
+                success: function (label) {
+                    label
+                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
+                },
+
+                submitHandler: function (form) {
+                    success3.show();
+                    error3.hide();
+                    form[0].submit(); // submit the form
+                }
+
+            });
+
+             //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.
+            $('.select2me', form3).change(function () {
+                form3.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+            });
+
+
+            //initialize datepicker
+            $('.date-picker').datepicker({
+                rtl: Metronic.isRTL(),
+                autoclose: true
+            });
+
+            $('.date-picker .form-control').change(function() {
+                form3.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input 
+            })
+    }
+
+   
+    return {
+        //main function to initiate the module
+        init: function () {
+            
+            handleValidation3();
+
+        }
+
+    };
+
+	}();
+
+
+
+jQuery(document).ready(function() {  
+
+	$('.date-picker').datepicker({
+                rtl: Metronic.isRTL(),
+                orientation: "left",
+                autoclose: true,
+                language: 'es',
+                format: 'dd-mm-yyyy',
+            }); 
+ 
+   FormValidation.init();
+});
+
+    
+    </script>
+
+    <!-- END PAGE LEVEL PLUGINS -->
+
+{% endblock %}
+

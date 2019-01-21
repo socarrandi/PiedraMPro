@@ -1,0 +1,34 @@
+# This file is auto-generated during the composer install
+parameters:
+    # base datos en MySQL
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: piedram
+    database_user: root
+    database_password: 
+    
+    # base datos en SQL server
+    database2_driver: pdo_mysql # pdo_mysql #pdo_pgsql #pdo_sqlsrv
+    database2_host: 127.0.0.1
+    database2_port: null
+    database2_name: informatica
+    database2_user: root
+    database2_password: 
+
+
+    # base datos informatica old
+    #database3_driver: pdo_mysql #pdo_pgsql #pdo_sqlsrv
+   # database3_host: 127.0.0.1
+   # database3_port: null
+  #  database3_name: old
+   # database3_user: root
+  #  database3_password: 
+    
+
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: ThisTokenIsNotSoSecretChangeIt
+    

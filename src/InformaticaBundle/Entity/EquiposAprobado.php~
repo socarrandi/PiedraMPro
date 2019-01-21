@@ -1,0 +1,56 @@
+<?php
+
+namespace InformaticaBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * EquiposAprobado
+ *
+ * @ORM\Table(name="equipos_aprobado")
+ * @ORM\Entity(repositoryClass="InformaticaBundle\Repository\EquiposAprobadoRepository")
+ */
+class EquiposAprobado
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**     
+     *@ORM\ManyToOne(targetEntity="InformaticaBundle\Entity\Unidad")
+     *@ORM\JoinColumn(name="unidad_id", referencedColumnName="id")
+     **/
+    private $unidad;
+
+    /**     
+     *@ORM\ManyToOne(targetEntity="InformaticaBundle\Entity\TipoEquipo")
+     *@ORM\JoinColumn(name="tipo_equipo_id", referencedColumnName="id")
+     **/
+    private $tipoEquipo;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cantidad", type="integer")
+     */
+    private $cantidad;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    
+}
+

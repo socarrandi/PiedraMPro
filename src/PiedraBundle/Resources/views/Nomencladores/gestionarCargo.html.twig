@@ -1,0 +1,235 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Gestionar Cargo{% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/bootstrap-select/bootstrap-select.min.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/select2/select2.css')}}"/>
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {% include 'PiedraBundle:include:header.html.twig' %}
+
+  <!-- END HEADER -->
+  <div class="clearfix"></div>
+  <!-- BEGIN CONTAINER -->
+  <div class="page-container">
+    
+
+  {% include 'PiedraBundle:include:sidebar.html.twig' %}
+
+
+
+  <div class="page-content-wrapper">
+    <div class="page-content">
+      <!-- BEGIN  MODAL Adicionar Departamento-->
+      <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+        <div class="modal-dialog">
+
+        <form role="form" action="{{path('gestionar_cargo')}}" method="post" accept-charset="utf-8">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+              <h4 class="modal-title">Adicionar Cargo</h4>
+            </div>
+            <div class="modal-body">               
+                <div class="form-body">
+
+                <div class="form-group form-md-line-input">
+                  <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Escribe Cargo">
+                    
+                  <span class="help-block">Escribe el Cargo</span>
+                </div>
+                 
+                </div>
+                  </br>
+               
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn blue">Adicionar</button>
+              <button type="button" class="btn default" data-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+      <!-- BEGIN PAGE HEADER-->
+      <!-- BEGIN PAGE HEAD -->
+      
+      <!-- END PAGE HEAD -->
+      
+      <!-- END PAGE HEADER-->
+
+
+      <!-- BEGIN PAGE CONTENT-->
+      
+      <div class="row">
+        <div class="col-md-12">
+          <!-- BEGIN EXAMPLE TABLE PORTLET-->
+          <div class="portlet box blue">
+            <div class="portlet-title">
+              <div class="caption">
+                Gestión de los Correos
+              </div>
+              
+            </div>
+            <div class="portlet-body">
+              <div class="table-toolbar">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="btn-group">
+                      <a href="#modal" data-toggle="modal" class="btn green">
+                      Adicionar Cargo <i class="fa fa-plus"></i>
+                      </a>
+                    </div>
+                    <div class="btn-group">
+                      <a href="{{path('exportar_usuario_nominal')}}" data-toggle="modal" class="btn yellow">
+                      Exportar Cargos <i class="fa fa-plus"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-icon">
+                    <i class="fa fa-search"></i>
+                    <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar Cargo">
+                  </div>
+                  </div>
+                  
+                </div>
+              </div>
+              
+            <div class="scroller"  style="height: 350px;">
+              <table id="table_cargo" class="table table-striped table-hover table-bordered dataTable" >
+                  <thead>
+                  <tr>
+                      <th> No. </th>
+                      <th> CARGO</th>
+                     
+                  </tr>
+                  </thead>
+                  <tbody>
+                      
+                      {% for c in cargos %}
+
+                        <tr data-id="{{ c.id }}">
+                            <td> {{ c.id }}</td>
+                            <td> {{ c.cargo}} </td> 
+                            
+                        </tr>     
+
+                      {%endfor%}
+
+                  </tbody>
+              </table>  
+            </div>
+            </div>
+          </div>
+          <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+      </div>
+      <!-- END PAGE CONTENT -->
+    </div>
+  </div>
+
+  </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+
+    <script  src="{{asset('bundles/piedra/global/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+    <script  src="{{asset('bundles/piedra/global/plugins/select2/select2.min.js')}}"></script>
+    
+    <script  src="{{asset('bundles/piedra/global/plugins/jquery-tabledit/jquery.tabledit.js')}}"></script>
+    <script  src="{{asset('bundles/piedra/global/plugins/jquery.input-ip-address-control-1.0.min.js')}}"></script>
+
+
+
+    <script type="text/javascript"> 
+
+
+    $('.ipv4').ipAddress();
+
+
+      $('#table_cargo').Tabledit({
+        url: '{{path('gestionar_cargo')}}',
+        editButton: false,       
+        editmethod: 'post',
+        deletemethod: 'post',
+        buttons: {
+            delete: {
+                class: 'btn btn-sm btn-danger',
+                html: '<span class="glyphicon glyphicon-trash"></span> &nbsp ELIMINAR',
+                action: 'delete'
+            },
+            edit: {
+            class: 'btn btn-sm btn-primary',
+            html: '<span class="glyphicon glyphicon-pencil"></span> &nbsp EDIT',
+            action: 'edit'
+            },
+            save: {
+              class: 'btn btn-sm btn-success',
+              html: 'Save'
+            },
+            restore: {
+              class: 'btn btn-sm btn-warning',
+              html: 'Restore',
+              action: 'restore'
+            },
+            confirm: {
+                class: 'btn btn-sm btn-default',
+                html: 'CONFIRMAR'
+            }
+        },
+
+        columns: {
+          identifier: [0, 'id'],                    
+          editable: [[1, 'cargo']]
+        }, 
+      });
+
+
+      // funcion para filtrar en la tabla
+       function myFunction() {
+            // Declare variables
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table_cargo");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td")[1];
+              if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                } else {
+                  tr[i].style.display = "none";
+                }
+              }
+            }
+          }
+
+    </script>
+
+    <!-- END PAGE LEVEL PLUGINS -->
+
+{% endblock %}
+

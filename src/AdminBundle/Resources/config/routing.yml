@@ -1,0 +1,18 @@
+login:
+  path:  /login
+  defaults: { _controller: AdminBundle:Default:login }
+
+check_path:
+  path:  /check
+
+logout:
+  path:  /logout
+
+
+registro:
+  path:  /registro
+  defaults: { _controller: AdminBundle:Default:registro }
+
+perfil:
+  path:  /perfil
+  defaults: { _controller: AdminBundle:Default:perfil }

@@ -1,0 +1,1685 @@
+{% extends '::base_pro.html.twig' %}
+
+{% block title %} Maestros Generales {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+
+    
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/horizontal/css/pages/floating-label.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/css/footable.standalone.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/css/jquery-confirm.css')}}"/>
+
+
+
+    <!-- Color picker plugins css -->
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/colorpicker/colorpicker.css')}}"/>
+
+  <!--alerts CSS -->
+    <link href="{{asset('bundles/informatica/adminpro/assets/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/css/jquery-confirm.css')}}"/>
+
+
+ <!-- select css -->
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/select2/dist/css/select2.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/switchery/dist/switchery.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-select/bootstrap-select.min.css')}}"/>
+   
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {{ include('InformaticaBundle:include:preloder.html.twig', {'loader_label':'Maestro General' } ) }}
+
+  <div class="load"></div>
+
+  {% include 'InformaticaBundle:include:header.html.twig' %}
+  {% include 'InformaticaBundle:include:aside.html.twig' %}
+
+
+  <div class="page-wrapper" style="min-height: 502px;">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        {{ include('InformaticaBundle:include:page_titles.html.twig', {'titulo_pagina':'Maestro General', 'session': 'Maestros Generales' } ) }}                          
+                        
+    <div class="row">
+          
+
+        <!-- MODAL EDITOR responsable  -->
+          <div class="modal fade" id="editor-responsable" tabindex="-1" role="dialog" aria-labelledby="editor-responsable-title">
+  
+          <div class="modal-dialog modal-lg" role="document">
+            <form class="modal-content form-horizontal " id="form-responsable">
+              <div class="modal-header">
+                <h4 class="modal-title" id="editor-title">RESPONSABLES</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                
+              </div>              
+
+              <div class="modal-body">
+
+                <input type="number" id="id" name="id" hidden="hidden" />
+                <input type="number" id="id_local" name="id_local" hidden="hidden" />
+                <input type="number" id="id_cargo" name="id_cargo" hidden="hidden" />
+
+                <div class="form-group required col-md-12 col-xs-12 m-t-20">
+                    <label for="local">SELECIONE ÁREA / LOCAL:</label>
+                    <select class="selectpicker"  data-live-search="true" id="local" name="local" required>   
+                    {% for l in locales %}  
+                        <option data-id="{{l.area}} / {{l.local}}" value="{{l.id}}"> {{l.area}} / {{l.local}} </option>                      
+                    {% endfor %}   
+                    </select>
+                    
+                </div>
+
+                <div class="form-group required col-md-12 col-xs-12">
+                     <label for="cargo">SELECIONE EL CARGO:</label>
+                    <select class="selectpicker"  data-live-search="true" id="cargo" name="cargo" required>   
+                    {% for c in cargos %}  
+                        <option data-id="{{c.cargo}}" value="{{c.id}}"> {{c.cargo}} </option>                      
+                    {% endfor %}   
+                    </select>
+                   
+                </div>
+
+                <div class="form-material required col-md-12 col-xs-12">
+                      <label for="responsable">ESCRIBA NOMBRE DEL RESPONSABLE:</label>
+                      <input class="form-control" id="responsable" name="responsable" type="text"/>                      
+                </div>     
+
+              </div>
+              
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>        
+            </form>          
+          </div>  
+        </div>
+        <!-- end MODAL EDITOR responsable -->
+
+         <!-- MODAL EDITOR local  -->
+        <div class="modal fade" id="editor-local" tabindex="-1" role="dialog" aria-labelledby="editor-local-title">
+  
+          <div class="modal-dialog modal-lg" role="document">
+            <form class="modal-content form-horizontal " id="form-local">
+              <div class="modal-header">
+                <h4 class="modal-title" id="editor-local-title">LOCALES</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                
+              </div>              
+
+              <div class="modal-body">
+
+                <input type="number" id="id" name="id" hidden="hidden" />
+                <input type="number" id="id_area" name="id_area" hidden="hidden" />
+
+                <div class="required col-md-12 col-xs-12 form-material">
+                      <label for="local2">ESCRIBA EL NOMBRE DEL ÁREA:</label>
+                      <input class="form-control" id="local2" name="local2" type="text" required />                      
+                </div>  
+
+                <div class="required col-md-12 col-xs-12 form-material">
+                      <label for="codigo">ESCRIBE EL CÓDIGO DEL ÁREA:</label>
+                      <input class="form-control" id="codigo" name="codigo" type="text"/>
+                     
+                </div> 
+
+                <div class="form-group required col-md-12 col-xs-12 m-t-20">
+                    <label for="local">SELECIONE EL C.COSTO:</label>
+                    <select class="selectpicker"  data-live-search="true" id="area" name="area" required>   
+                    {% for a in areas %}  
+                        <option value="{{a.id}}"> {{a.area}} </option>                      
+                    {% endfor %}   
+                    </select>
+                    
+                </div>                   
+
+              </div>
+              
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>        
+            </form>          
+          </div>  
+        </div>
+        <!-- end MODAL EDITOR local -->
+
+
+        <!-- MODAL EDITOR local  -->
+        <div class="modal fade" id="editor-subarea" tabindex="-1" role="dialog" aria-labelledby="editor-subarea-title">
+  
+          <div class="modal-dialog modal-lg" role="document">
+            <form class="modal-content form-horizontal " id="form-subarea">
+              <div class="modal-header">
+                <h4 class="modal-title" id="editor-subarea-title">Sub Área</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                
+              </div>              
+
+              <div class="modal-body">
+
+                <input type="number" id="id" name="id" hidden="hidden" />
+
+
+
+                <div class="form-group required col-md-12 col-xs-12">
+                  <label for="local">SELECIONE EL ÁREA:</label> 
+                  <select class="selectpicker"  data-live-search="true" id="local3" name="local3" required>   
+                    {% for l in locales %}  
+                        <option data-id="{{l.area}} / {{l.local}}" value="{{l.id}}"> {{l.area}} / {{l.local}} </option>                      
+                    {% endfor %}   
+                  </select>
+                  
+                                      
+                </div>  
+
+                <div class="form-group required col-md-12 col-xs-12 form-material">
+                      <label for="subarea">ESCRIBE EL NOMBRE DE LA SUBÁREA:</label>
+                      <input class="form-control" id="subarea" name="subarea" type="text" required/>                      
+                </div>  
+
+                <div class="form-group required col-md-12 col-xs-12 form-material">
+                      <label for="codigo3">ESCRIBE EL CÓDIGO DE LA SUBÁREA:</label>
+                      <input class="form-control" id="codigo3" name="codigo3" type="text"/>                     
+                </div>             
+              </div>
+              
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>        
+            </form>          
+          </div>  
+        </div>
+        <!-- end MODAL EDITOR local -->
+
+    </div>
+
+    
+
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="card">            
+          <div class="card-body">  
+            <div class="d-flex">                  
+              <h4 id="card-title-mov" class="card-title"> <span class="lstick"></span>DEFINICIÓN Tipo Equipo</h4>
+            </div>
+
+            <div class="row">
+
+              <div class="col-xs-12 col-md-6">
+                  <div class="row">
+                    <div class="form-material m-t-10 col-md-12 col-xs-12">
+                      
+                       
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>Escribe Tipo Equipo.</label>
+                      <input type="hidden" name="id_tipo_equipo" id="id_tipo_equipo" value="add" />
+                      <input type="text" class="form-control"  id="tipo_equipo" name="tipo_equipo"> </div> 
+                    </div>
+
+
+                    <div class="m-t-10 col-md-10 col-xs-10">
+
+                      <div id="cp7" class="cp7" class="inl-bl"></div>
+
+                      <input id="color" type="text" hidden="hidden" /> 
+                    </div>
+
+                     <div class="input-group required col-md-12 col-xs-12">
+                  <ul class="icheck-list">
+                    <li>
+                        <input type="checkbox" class="check" id="tipo_equipo_ocultar" name="tipo_equipo_ocultar" data-checkbox="icheckbox_flat-red" disabled="">
+                        <label for="tipo_equipo_ocultar">Ocultar TE (Desuso)</label>
+                    </li>                                       
+                  </ul> 
+                </div>
+
+                  </div>
+              </div>
+
+
+              <div class="col-xs-12 col-md-6">
+
+                <div class="row">
+                  <div class="form-material m-t-20 col-md-12 col-xs-12">
+
+                <select size="10" class="form-control p-0" id="listado_tipo_equipo" name="listado_tipo_equipo" required>   
+                  {% for tipo in tipo_equipos %}
+                      <option data-name="{{tipo.color}}" data-id="{% if tipo.ocultar %}YES{% else %}NO{% endif %}" value="{{ tipo.id }}"> {{ tipo.tipoEquipo }}</option>
+                  {% endfor %}  
+                </select><span class="bar"></span>                   
+
+               </div>
+                </div>
+              </div>
+                                         
+              {% if is_granted('ROLE_ADMIN') %}
+                <div class="card-body botones_tipo_equipo">
+                  <button id="add_tipo_equipo" class="btn btn-primary">Adicionar</button> 
+                  <button id="delete_tipo_equipo" class="btn btn-danger" disabled="disabled">Eliminar</button>            
+                  <button id="cancel_tipo_equipo" class="btn default">Cancelar</button>
+                </div>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="card">            
+            <div class="card-body">  
+              <div class="d-flex">                  
+                <h4 id="card-title-mov" class="card-title"> <span class="lstick"></span>DEFINICIÓN Piezas</h4>
+              </div>
+
+              <div class="row">
+                <div class="form-material m-t-20 col-md-6 col-xs-12">
+
+
+                  <div class="form-group">
+                    <label>Escribe Tipo Pieza</label>
+                    <input type="hidden" name="id_pieza" id="id_pieza" value="add" />
+                    <input type="text" class="form-control" id="pieza" name="pieza">
+                  </div>
+
+
+                  <div class="form-group">                     
+                      <div class="input-group">    
+                          <label for="tipo_pieza">Tipo Pieza</label>                                                
+                          <ul class="icheck-list">
+                              <li>
+                                  <input value="1" type="radio" class="check" id="tipo_1" name="radio_pieza" checked data-radio="iradio_flat-red">
+                                  <label for="tipo_1">Dispositivo Interno</label>
+                              </li>
+                              <li>
+                                  <input value="0" type="radio" class="check" id="tipo_0" name="radio_pieza" data-radio="iradio_flat-red">
+                                  <label for="tipo_0">Dispositivo Externo</label>
+                              </li>
+                                                            
+                              <li>
+                                  <input value="2" type="radio" class="check" id="tipo_2" name="radio_pieza" data-radio="iradio_flat-red">
+                                  <label for="tipo_2">Dispositivo Asociado</label>
+                              </li>                              
+                              
+                          </ul>
+                      </div>
+                  </div>
+                
+                </div>
+
+
+              <div class="form-material m-t-20 col-md-6 col-xs-12">
+
+                <select size="10" class="form-control p-0" id="listado_pieza" name="listado_pieza" required>   
+                    {% for pieza in piezas %}
+                      <option data-id="{{pieza.tipo }}" value="{{ pieza.id }}"> {{ pieza.pieza }}</option>
+                    {% endfor %} 
+                </select><span class="bar"></span>                   
+
+              </div>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                <div class="card-body">
+                    <button id="add_pieza" class="btn btn-primary">Adicionar</button> 
+                    <button id="delete_pieza" class="btn btn-danger" disabled="disabled">Eliminar</button>             
+                    <button id="cancel_pieza" class="btn btn-default">Cancelar</button>
+                </div> 
+                {% endif %}   
+            </div>
+          </div>                     
+        </div> 
+    </div>
+    </div>
+
+
+    <div class="row">
+       <div class="col-lg-12 col-xlg-12 col-md-12">
+                        <div class="card">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs profile-tab" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#responsables" role="tab">RESPONSABLES</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#ccosto" role="tab">CCOSTO</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#areas" role="tab">ÁREAS</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#subareas" role="tab">SUB ÁREAS</a> </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="responsables" role="tabpanel">
+                                    <div class="card-body">
+                                         <div class="row">
+                                          <div class="col-md-12 col-sm-12">
+
+                                            <div class="card">            
+                                              <div class="card-body">                                                 
+                                                <table id="table_responsable" class="table table-hover table_responsable" data-paging="true" data-filtering="true" data-sorting="true" >  
+                                   
+                                                </table>  
+                                                             
+                                              </div>
+                                            </div>            
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--second tab-->
+                                <div class="tab-pane" id="ccosto" role="tabpanel">
+                                    <div class="card-body">
+
+                                      <div class="row">
+                                          <div class="col-md-12 col-sm-12">
+
+                                            <div class="card">            
+                                              <div class="card-body">                                                  
+                                                <table id="table_ccosto" class="table table-hover table_ccosto" data-paging="true" data-filtering="true" data-sorting="true" >  
+
+                                                  <div class="d-flex">
+                                                    <div class="mr-auto">
+                                                      <div class="form-group">
+                                                        <button id="sincronizar_ccosto" class="btn btn-primary btn-sm"><i class="mdi mdi-plus" aria-hidden="true"></i>Sincronizar con AFT</button>
+                                                      </div>                                 
+
+                                                    </div>
+                                                  </div>
+                                   
+                                                </table>  
+                                                             
+                                              </div>
+                                            </div>            
+                                          </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                                <!--second tab-->
+                                <div class="tab-pane" id="areas" role="tabpanel">
+                                    <div class="card-body">
+
+                                      <div class="row">
+                                          <div class="col-md-12 col-sm-12">
+
+                                            <div class="card">            
+                                              <div class="card-body">                                                  
+                                                <table id="table_area" class="table table-hover table_area" data-paging="true" data-filtering="true" data-sorting="true" > 
+
+                                                  <div class="d-flex">
+                                                    <div class="mr-auto">
+                                                        <button data-toggle="tooltip" title="Add Áreas de ZUNAFT" id="modal_add_areas" class="btn btn-primary btn-sm"><i class="mdi mdi-plus" aria-hidden="true"></i>Adicionar Áreas</button>                                                           
+                                                    </div>
+                                                  </div> 
+                                   
+                                                </table>  
+                                                             
+                                              </div>
+                                            </div>            
+                                          </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="subareas" role="tabpanel">
+                                    <div class="card-body">
+                                       
+                                      <div class="row">
+                                          <div class="col-md-12 col-sm-12">
+
+                                            <div class="card">            
+                                              <div class="card-body">                                                 
+                                                <table id="table_subarea" class="table table-hover table_subarea" data-paging="true" data-filtering="true" data-sorting="true" >  
+                                   
+                                                </table>  
+                                                             
+                                              </div>
+                                            </div>            
+                                          </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+    
+
+
+     <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="card">            
+          <div class="card-body">  
+            <div class="d-flex">                  
+              <h4 id="card-title-mov" class="card-title"> <span class="lstick"></span>CONEXIÓN DE BD A ZUNAFT</h4>
+            </div>
+
+            <div class="row">                  
+
+                    <input type="hidden" name="dba_aft_id" id="dba_aft_id" value="{%if conexiones['AFT'] is defined %} {{conexiones['AFT'].id }} {% endif %}" />
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>DRIVER:</label>                      
+                      <input readonly="readonly" type="text" class="form-control" id="dba_aft_driver" name="dba_aft_driver" value="pdo_sqlsrv"> </div> 
+                    </div>
+              
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>HOST:</label>
+                      <input type="text" class="form-control" id="dba_aft_host" name="dba_aft_host" value="{%if conexiones['AFT'] is defined %} {{conexiones['AFT'].host | trim(' ') }} {% endif %}">
+                      <span class="help-block text-muted"><small> Ejemplo: 10.12.39.5 o srvdb </small></span>
+                       </div> 
+                    </div>
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>PORT:</label>
+                      <input type="text" class="form-control" id="dba_aft_port" name="dba_aft_port" value="{%if conexiones['AFT'] is defined %} {{conexiones['AFT'].port | trim(' ') }} {% endif %}"> 
+                      <span class="help-block text-muted"><small> Por Defecto: null </small></span>
+                    </div>
+                      
+                    </div>
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>NOMBRE BASE DATOS:</label>
+                      <input type="text" class="form-control" id="dba_aft_dbname" name="dba_aft_dbname" value="{%if conexiones['AFT'] is defined %} {{conexiones['AFT'].dbname | trim(' ') }} {% endif %}"> </div> 
+                    </div>
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>USUARIO:</label>
+                      <input type="text" class="form-control" id="dba_aft_user" name="dba_aft_user" value="{%if conexiones['AFT'] is defined %} {{conexiones['AFT'].user | trim(' ') }} {% endif %}"> </div> 
+                    </div>
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>CONTRASEÑA:</label>
+                      <input type="password" class="form-control" id="dba_aft_password" name="dba_aft_password" value="{%if conexiones['AFT'] is defined %} {{conexiones['AFT'].password | trim(' ') }} {% endif %}"> </div> 
+                    </div>
+
+            </div>
+
+             {% if is_granted('ROLE_ADMIN') %}
+                <div class="card-body">
+                    <button id="add_aft_conexion" class="btn btn-primary"><i class="mdi mdi-content-save-all"></i>Guardar Conexión</button> 
+                    <button id="probar_aft_conexion" class="btn btn-default"><i class="mdi mdi-check"></i>Probar Conexión</button> 
+                </div> 
+              {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12">
+        <div class="card">            
+          <div class="card-body">  
+            <div class="d-flex">                  
+              <h4 id="card-title-mov" class="card-title"> <span class="lstick"></span>CONEXIÓN DE BD A ZUNSTOCK</h4>
+            </div>
+
+            <div class="row">                  
+
+                    <input type="hidden" name="dba_stock_id" id="dba_stock_id" value="" />
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>DRIVER:</label>                      
+                      <input readonly="readonly" type="text" class="form-control" id="dba_stock_driver" name="dba_stock_driver" value="pdo_sqlsrv"> </div> 
+                    </div>
+              
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>HOST:</label>
+                      <input type="text" class="form-control" id="dba_stock_host" name="dba_stock_host" 
+                      value="{%if conexiones['STOCK'] is defined %} {{conexiones['STOCK'].host }} {% endif %}">
+                      <span class="help-block text-muted"><small> Ejemplo: 10.12.39.5 o srvdb </small></span>
+                       </div> 
+                    </div>
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>PORT:</label>
+                      <input type="text" class="form-control" id="dba_stock_port" name="dba_stock_port" 
+                      value="{%if conexiones['STOCK'] is defined %} {{conexiones['STOCK'].port }} {% endif %}"> 
+                      <span class="help-block text-muted"><small> Por Defecto: null </small></span>
+                    </div>
+                      
+                    </div>
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>NOMBRE BASE DATOS:</label>
+                      <input type="text" class="form-control" id="dba_stock_dbname" name="dba_stock_dbname" value="{%if conexiones['STOCK'] is defined %} {{conexiones['STOCK'].dbname }} {% endif %}"> </div> 
+                    </div>
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>USUARIO:</label>
+                      <input type="text" class="form-control" id="dba_stock_user" name="dba_stock_user" value="{%if conexiones['STOCK'] is defined %} {{conexiones['STOCK'].user }} {% endif %}"> </div> 
+                    </div>
+
+                    <div class="form-material m-t-5 col-md-12 col-xs-12">  
+                      <div class=" form-group required col-md-12 col-xs-12">
+                      <label>CONTRASEÑA:</label>
+                      <input type="password" class="form-control" id="dba_stock_password" name="dba_stock_password" value="{%if conexiones['STOCK'] is defined %} {{conexiones['STOCK'].password }} {% endif %}"> </div> 
+                    </div>
+
+            </div>
+
+             {% if is_granted('ROLE_ADMIN') %}
+                <div class="card-body">
+                    <button id="add_aft_conexion" class="btn btn-primary"><i class="mdi mdi-content-save-all"></i>Guardar Conexión</button> 
+                    <button id="probar_aft_conexion" class="btn btn-default"><i class="mdi mdi-check"></i>Probar Conexión</button> 
+                </div> 
+              {% endif %}
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+
+   
+
+
+      <!-- END PORTLET-->
+    </div>
+           
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+     {% include 'InformaticaBundle:include:footer.html.twig' %}
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+  </div>
+
+  
+  
+
+  </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/moment/moment.js')}}"></script>  
+     <!--Custom JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/horizontal/js/custom.min.js')}}"></script> 
+        
+
+    <!-- Footable -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/js/footable.min.js')}}"></script>
+    
+
+     <!-- Sweet-Alert  -->
+    <script src="{{asset('bundles/informatica/adminpro/assets/plugins/sweetalert/sweetalert.min.js')}}"></script>    
+    <script  src="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/js/jquery-confirm.js')}}"></script>
+
+     <!-- Color Picker Plugin JavaScript -->
+    <script  src="{{asset('bundles/informatica/adminpro/assets/plugins/colorpicker/bootstrap-colorpicker.js')}}"></script>
+
+ 
+
+    <!-- Select -->   
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/switchery/dist/switchery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/select2/dist/js/select2.full.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+    
+
+    <script type="text/javascript" charset="utf-8" async defer>
+
+    $(window).on('load', function() {
+
+
+       $(".table_equipo").on('click', ".modal_movimiento_equipo", function(){
+
+        id_equipo = $(this).attr('data-id');
+        $(".load").append(loader('Cargando Áreas de AFT'));
+
+        $.post('{{path('movimiento_aft')}}', { 'action': 'cargar_responsable', 'id_equipo' : id_equipo })
+            .done(function (datos) { 
+
+              global_equipos = datos['responsables'];
+              
+              $("#movimiento_equipo").removeAttr('disabled');
+              $("#origen_equipo").attr('data-id', datos['equipo']['id'] );
+              $("#origen_equipo").attr('data-name', datos['equipo']['tipoEquipo'] );
+
+              $("#origen_equipo").append(
+                                    'EQUIPO: '+datos['equipo']['tipoEquipo']+'<br>'+                                    
+                                    'UBICACION: '+datos['equipo']['local']+'<br>'+
+                                    'RESPONSABLE: '+datos['equipo']['responsable']+'<br>'+
+                                    'ESTADO: '+datos['equipo']['estado']+'<br>'+
+                                    'MEDIO BÁSICO: '+datos['equipo']['medioBasico']+'<br>'+
+                                    'No. SUBMAYOR: '+datos['equipo']['noSubmayor']+'<br>'+
+                                    'NOMBRE EQUIPO: '+datos['equipo']['nombreEquipo']+'<br>'+
+                                    'SELLO: '+datos['equipo']['sello']+'<br>'+
+                                    'OBSERVACIÓN: '+datos['equipo']['observacion']+'<br>'
+                                  );            
+
+              for (var i = 0 ; i < datos['responsables'].length; i++) {
+                  $("#select_destino_equipos").append("<option value='"+datos['responsables'][i]['id']+"'>"+datos['responsables'][i]['local']+" - "+datos['responsables'][i]['responsable']+"</option>");
+              }  
+
+
+              $('#select_destino_equipos').selectpicker('destroy');     
+              $('#select_destino_equipos').selectpicker('show');    
+
+              $("#div_movimiento_pieza").removeAttr('hidden');  
+
+
+              $(".load").empty();                   
+              
+
+            }).fail(function () {
+                //exite error
+                alerta_error();
+                $(".load").empty(); 
+            }); 
+
+
+
+      });
+
+      $(".selectpicker").selectpicker();     
+
+          responsables();
+          locales();
+          subareas();
+          ccosto();
+
+          // responsables local area
+          function responsables(){
+          var $modal = $('#editor-responsable'),
+          $editor = $('#form-responsable'),
+          $editorTitle = $('#editor-title'),
+          ft = FooTable.init('#table_responsable', {
+
+            columns: [
+                  {"name":"id","title":"ID", "type":"number","breakpoints":"xs sm"},
+                  {"name":"responsable","title":"RESPONSABLE", "type":"text","breakpoints":"xs sm"},
+                  {"name":"local","title":"ÁREA/LOCAL", "type": "select", "breakpoints":"xs sm" },
+                  {"name":"cargo","title":"CARGO", "type": "select", "breakpoints":"xs sm" },
+                  {"name":"id_cargo","title":"ID CARGO", "visible": false}, 
+                  {"name":"id_local","title":"ID LOCAL", "type": "hiden", "visible": false }
+              ],
+              rows: $.post('{{path('maestro_general_pro')}}', { 'action': 'rows_responsables'}).fail(function () { alerta_error();}),
+              filtering: {
+                  enabled: true,
+                  placeholder: "Buscar Responsable.." 
+                },
+              editing: {
+                enabled: true, 
+                editText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span>', 
+                addText: '<span class="mdi mdi-lead-pencil" aria-hidden="true">Adicionar Responsable</span>',  
+                deleteText: '<span class="mdi mdi-delete-forever" aria-hidden="true"></span>',
+                showText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span> Editar Responsable',
+                cancelText: 'Cancelar',
+
+                addRow: function(){
+                  $modal.removeData('row');
+                  $editor[0].reset();
+                  $editorTitle.text('Adicionar Responsable');
+                  $modal.modal('show');
+                },              
+                editRow: function(row){
+                  var values = row.val();
+                    $editor.find('#id').val(values.id);
+                    $editor.find('#responsable').val(values.responsable);
+                    $editor.find('#local').val(values.id_local);
+                    $editor.find('#cargo').val(values.id_cargo);
+
+                    //select cargo o local del responsable en selectpicker
+                    $('select[name=cargo]').val(values.id_cargo);
+                    $('select[name=local]').val(values.id_local);
+                    $("select[name=local]").selectpicker("refresh");
+                    $("select[name=cargo]").selectpicker("refresh");
+
+                  $modal.data('row', row);
+                  $editorTitle.text('Editar Responsable');
+                  $modal.modal('show');
+                },
+                deleteRow: function(row){
+
+
+                   swal({   
+                              title: "Eliminar Responsable?",   
+                              text: "Seguro desea eliminar el Responsable?",   
+                              type: "warning",   
+                              showCancelButton: true,   
+                              confirmButtonColor: "#DD6B55",   
+                              confirmButtonText: "Si, Eliminar!",   
+                              cancelButtonText: "No, Cancelar!",   
+                              closeOnConfirm: false,   
+                              closeOnCancel: false 
+                          }, function(isConfirm){   
+                              if (isConfirm) {    
+
+                                  var values = row.val();   
+                                  $.post('{{path('maestro_general_pro')}}', { 'action': 'delete_responsable', 'id': values.id  })
+                                              .done(function (d) {  
+                                                row.delete();  
+
+                                                  swal({   
+                                                    title: "Eliminar Responsable!",   
+                                                    text: "Se eliminó correctamente el responsable!",  
+                                                    type:"success", 
+                                                    timer: 2500,   
+                                                    showConfirmButton: false 
+                                                  }); 
+                                              
+                                                                                         
+                                              }).fail(function () {
+                                                alerta_error();
+                                            });                                  
+                                  
+                              } else {    
+                                  
+                                  swal({   
+                                      title: "Cancelar!",   
+                                      text: "Eliminar Responsable fue cancelado!",  
+                                      type:"error", 
+                                      timer: 2500,   
+                                      showConfirmButton: false 
+                                  });
+                              } 
+                          });                  
+                  
+                }
+              }
+          });
+
+          $editor.on('submit', function(e){
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+            var l =$("select#local option[value='"+$editor.find('#local').val()+"']").attr('data-id');
+            var c =$("select#cargo option[value='"+$editor.find('#cargo').val()+"']").attr('data-id');            
+            var row = $modal.data('row'),
+                values = {
+                  id: $editor.find('#id').val(),     
+                  responsable: $editor.find('#responsable').val(),                  
+                  id_local: $editor.find('#local').val(),
+                  id_cargo: $editor.find('#cargo').val(),
+                  local:l,
+                  cargo: c
+                };
+
+                if (row instanceof FooTable.Row){
+                  row.val(values);
+                  $.post('{{path('maestro_general_pro')}}', { 'action': 'editar_responsable', 'responsable': values }).fail(function () { alerta_error();});
+                }else{
+
+                  $.post('{{path('maestro_general_pro')}}', { 'action': 'add_responsable', 'responsable': values }).done(function(id){
+
+                        values.id = id;
+                        ft.rows.add(values);
+
+                  }).fail(function () { alerta_error();});                
+                } 
+                $modal.modal('hide');
+          });
+          }
+
+          // ccosto
+          function ccosto(){
+            ft = FooTable.init('#table_ccosto', {
+
+              columns: [
+                    {"name":"id","title":"ID", "type":"number","breakpoints":"xs sm"},
+                    {"name":"id_ccosto_aft","title":"ID CCOSTO AFT", "type":"text","breakpoints":"xs sm"},
+                    {"name":"codigo","title":"CÓDIGO", "type": "select", "breakpoints":"xs sm" },
+                    {"name":"area","title":"CCOSTO", "type": "select", "breakpoints":"xs sm" },
+                    
+                ],
+                rows: $.post('{{path('maestro_general_pro')}}', { 'action': 'rows_ccosto'}).fail(function () { alerta_error();}),
+                filtering: {
+                    enabled: true,
+                    placeholder: "Buscar Ccotos.." 
+                  }              
+            });
+          }
+
+         
+
+
+          //areas y local
+          function locales(){
+          var $modal = $('#editor-local'),
+          $editor = $('#form-local'),
+          $editorTitle = $('#editor-local-title'),
+          ft = FooTable.init('#table_area', {
+
+            columns: [
+                  {"name":"id","title":"ID", "type":"number","breakpoints":"xs sm"},                 
+                  {"name":"local2","title":"LOCAL", "type": "select", "breakpoints":"xs sm" },
+                  {"name":"codigo","title":"CÓDIGO", "type": "number", "breakpoints":"xs sm" },
+                  {"name":"area","title":"ÁREA", "type": "select", "breakpoints":"xs sm" },
+                  {"name":"id_area","title":"ID ÁREA", "visible":false }         
+              ],
+              rows: $.post('{{path('maestro_general_pro')}}', { 'action': 'rows_locales'}).fail(function () { alerta_error();}),
+              filtering: {
+                  enabled: true,
+                  placeholder: "Buscar Local.." 
+                },
+              editing: {
+                enabled: true, 
+                editText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span>', 
+                addText: '<span class="mdi mdi-lead-pencil" aria-hidden="true">Adicionar Local</span>',  
+                deleteText: '<span class="mdi mdi-delete-forever" aria-hidden="true"></span>',
+                showText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span> Editar Local', 
+                addRow: function(){
+                  $modal.removeData('row');
+                  $editor[0].reset();
+                  $editorTitle.text('Adicionar Local');
+                  $modal.modal('show');
+                },               
+                editRow: function(row){
+                  var values = row.val();
+                    $editor.find('#id').val(values.id);
+                    $editor.find('#local2').val(values.local2);
+                    $editor.find('#codigo').val(values.codigo);
+
+                    $('select[name=area]').val(values.id_area);
+                    $("select[name=area]").selectpicker("refresh");
+
+                  $modal.data('row', row);
+                  $editorTitle.text('Editar Local');
+                  $modal.modal('show');
+                },
+                deleteRow: function(row){
+
+
+                   swal({   
+                              title: "Eliminar Local?",   
+                              text: "Seguro desea eliminar el Local?",   
+                              type: "warning",   
+                              showCancelButton: true,   
+                              confirmButtonColor: "#DD6B55",   
+                              confirmButtonText: "Si, Eliminar!",   
+                              cancelButtonText: "No, Cancelar!",   
+                              closeOnConfirm: false,   
+                              closeOnCancel: false 
+                          }, function(isConfirm){   
+                              if (isConfirm) {   
+
+
+                              var values = row.val();  
+                              $.post('{{path('maestro_general_pro')}}', { 'action': 'delete_local', 'id': values.id  })
+                                        .done(function (d) {  
+                                          row.delete();
+                                                  swal({   
+                                                    title: "Eliminar Local!",   
+                                                    text: "Se eliminó correctamente el Local!",  
+                                                    type:"success", 
+                                                    timer: 2500,   
+                                                    showConfirmButton: false 
+                                                  });                                        
+                                        }).fail(function () {
+                                          alerta_error();
+                              });                                                                    
+                                  
+                              } else {    
+                                  
+                                  swal({   
+                                      title: "Cancelar!",   
+                                      text: "Eliminar Local fue cancelado!",  
+                                      type:"error", 
+                                      timer: 2500,   
+                                      showConfirmButton: false 
+                                  });
+                              } 
+                          }); 
+                   
+                  
+                }
+              }
+          });
+
+          $editor.on('submit', function(e){
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+
+            var nombre_area =$("select#area option[value='"+$editor.find('#area').val()+"']").attr('data-id');
+
+            var row = $modal.data('row'),
+                values = {
+                  id: $editor.find('#id').val(),     
+                  local2: $editor.find('#local2').val(),                  
+                  codigo: $editor.find('#codigo').val(),
+                  id_area: $editor.find('#area').val(),
+                  area: nombre_area
+                };
+
+                if (row instanceof FooTable.Row){
+                  row.val(values);
+                  $.post('{{path('maestro_general_pro')}}', { 'action': 'editar_local', 'local': values }).fail(function () { alerta_error();});
+                }else{
+
+                  $.post('{{path('maestro_general_pro')}}', { 'action': 'add_local', 'local': values }).done(function(datos){
+
+                      values.id = datos.id;    
+                     // for (var i = 0 ; i < datos['locales'].length; i++) {
+                          $("#local").append("<option value='"+datos['local'][i]['id']+"'>"+datos['local'][i]['area']+" / "+datos['local'][i]['local']+"</option>");
+                          $("#local3").append("<option value='"+datos['local'][i]['id']+"'>"+datos['local'][i]['area']+" / "+datos['local'][i]['local']+"</option>");
+                    //  }       
+
+                    $('#local').selectpicker('destroy');     
+                    $('#local').selectpicker('show'); 
+                    $('#local3').selectpicker('destroy');     
+                    $('#local3').selectpicker('show'); 
+
+                    ft.rows.add(values);
+
+                  }).fail(function () { alerta_error();});                
+                } 
+
+                $modal.modal('hide');
+          });
+          }
+          
+
+          //sub areas
+
+          function subareas(){
+          var $modal = $('#editor-subarea'),
+          $editor = $('#form-subarea'),
+          $editorTitle = $('#editor-subarea-title'),
+          ft = FooTable.init('#table_subarea', {
+
+            columns: [
+                  {"name":"id","title":"ID", "type":"number","breakpoints":"xs sm"},                 
+                  {"name":"subarea","title":"SUBÁREA",  "breakpoints":"xs sm" },
+                  {"name":"local3","title":"AREA",  "breakpoints":"xs sm" },
+                  {"name":"codigo3","title":"CÓDIGO",  "breakpoints":"xs sm" },
+                  {"name":"id_local3","title":"ID LOCAL", "visible":false }         
+              ],
+              rows: $.post('{{path('maestro_general_pro')}}', { 'action': 'rows_subarea'}).fail(function () { alerta_error();}),
+              filtering: {
+                  enabled: true,
+                  placeholder: "Buscar SubÁrea.." 
+                },
+              editing: {
+                enabled: true, 
+                editText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span>', 
+                addText: '<span class="mdi mdi-lead-pencil" aria-hidden="true">Adicionar SubÁrea</span>',  
+                deleteText: '<span class="mdi mdi-delete-forever" aria-hidden="true"></span>',
+                showText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span> Editar SubÁrea', 
+                addRow: function(){
+                  $modal.removeData('row');
+                  $editor[0].reset();
+                  $editorTitle.text('Adicionar SubÁrea');
+                  $modal.modal('show');
+                },               
+                editRow: function(row){
+                  var values = row.val();
+                    $editor.find('#id').val(values.id);
+                    $editor.find('#local3').val(values.id_local3);
+                    $editor.find('#codigo3').val(values.codigo3);
+                    $editor.find('#subarea').val(values.subarea);                  
+
+                  $modal.data('row', row);
+                  $editorTitle.text('Editar SubÁrea');
+                  $modal.modal('show');
+                },
+                deleteRow: function(row){
+
+
+                  swal({   
+                              title: "Eliminar SubÁrea?",   
+                              text: "Seguro desea eliminar la SubÁrea?",   
+                              type: "warning",   
+                              showCancelButton: true,   
+                              confirmButtonColor: "#DD6B55",   
+                              confirmButtonText: "Si, Eliminar!",   
+                              cancelButtonText: "No, Cancelar!",   
+                              closeOnConfirm: false,   
+                              closeOnCancel: false 
+                          }, function(isConfirm){   
+                              if (isConfirm) {   
+
+                                var values = row.val();  
+                                $.post('{{path('maestro_general_pro')}}', { 'action': 'delete_subarea', 'id': values.id  })
+                                        .done(function (d) {  
+                                          row.delete();
+                                                swal({   
+                                                    title: "Eliminar SubÁrea!",   
+                                                    text: "Se eliminó correctamente la SubÁrea!",  
+                                                    type:"success", 
+                                                    timer: 2500,   
+                                                    showConfirmButton: false 
+                                                });                                 
+                                        }).fail(function () {
+                                          alerta_error();
+                                      });                                                                                                 
+                                  
+                              } else {    
+                                  
+                                  swal({   
+                                      title: "Cancelar!",   
+                                      text: "Eliminar SubÁrea fue cancelado!",  
+                                      type:"error", 
+                                      timer: 2500,   
+                                      showConfirmButton: false 
+                                  });
+                              } 
+                          }); 
+                 
+                }
+              }
+          });
+
+          $editor.on('submit', function(e){
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+
+            var nombre_local =$("select#local3 option[value='"+$editor.find('#local3').val()+"']").attr('data-id');
+
+            var row = $modal.data('row'),
+                values = {
+                  id: $editor.find('#id').val(),     
+                  local3: nombre_local, 
+                  id_local3: $editor.find('#local3').val(), 
+                  codigo3: $editor.find("#codigo3").val(),
+                  subarea: $editor.find('#subarea').val(),
+                };
+
+                if (row instanceof FooTable.Row){
+                  row.val(values);
+                  $.post('{{path('maestro_general_pro')}}', { 'action': 'editar_subarea', 'subarea': values }).fail(function () { alerta_error();});
+                }else{
+
+                  $.post('{{path('maestro_general_pro')}}', { 'action': 'add_subarea', 'subarea': values }).done(function(id){
+
+                        values.id = id;
+                        ft.rows.add(values);
+
+                  }).fail(function () { alerta_error();});                
+                } 
+
+                $modal.modal('hide');
+          });
+          }
+
+        function alerta_error(){        
+             swal({   
+                title: "Error!",   
+                text: "Algo salió mal, por favor vuelva a intentarlo", 
+                type: "warning",   
+                timer: 3000,   
+                showConfirmButton: false 
+            });
+       
+      }
+
+         
+        $("#add_pieza").on('click', function(){       
+            var pieza = $("#pieza").val();
+            var id_pieza = $("#id_pieza").val();
+            var tipo_pieza = $('.iradio_flat-red.checked').find('input').val();           
+
+            if (pieza != '' && id_pieza == 'add'){
+            var btn = $(this);            
+            btn.attr('disabled','disabled')
+
+            $("#cancel_pieza").attr('disabled','disabled');
+                btn.text('Guardando...');
+
+              $.post('{{path('mastro_pieza')}}', { 'action': 'add_pieza', 'pieza' : pieza, 'tipo_pieza': tipo_pieza  })
+                    .done(function (dato) {
+
+                      $("#pieza").val('');
+                      btn.removeAttr('disabled');
+                      $("#cancel_pieza").removeAttr('disabled');
+                      btn.text('Adicionar');
+                      //adicionar al select 
+                      $("#listado_pieza").append("<option data-id='"+['tipo']+"' value='"+dato['id']+"'>"+ dato['pieza']+" </option>");
+                      
+                      cancelar_modificar_pieza();
+
+                }).fail(function () {
+                  cancelar_modificar_pieza();
+                      
+                  }); 
+
+            }//modificar pieza
+            else if (pieza != '' && id_pieza != ''){
+
+              var btn = $(this);              
+
+            btn.attr('disabled','disabled');
+            $("#cancel_pieza").attr('disabled','disabled');
+            $("#delete_pieza").attr('disabled','disabled');
+            
+                btn.text('Guardando...');
+
+              $.post('{{path('mastro_pieza')}}', { 'action': 'modificar_pieza', 'id_pieza': id_pieza ,'pieza' : pieza , 'tipo_pieza': tipo_pieza  })
+                    .done(function (dato) {
+
+                      $("#pieza").val('');
+                      btn.removeAttr('disabled');
+                      $("#cancel_pieza").removeAttr('disabled');
+                      btn.text('Adicionar');
+
+                      //modificar option del select 
+                      $("select#listado_pieza option[value='"+dato['id']+"']").text(dato['pieza']);                      
+                      $("select#listado_pieza option[value='"+dato['id']+"']").attr('data-id', dato['pieza']);
+                                            
+                      cancelar_modificar_pieza();
+
+                }).fail(function () {
+                        cancelar_modificar_pieza();
+                  });
+
+            }       
+
+      });
+
+      
+      $("#listado_pieza").on('change', function(){
+        
+        $("#add_pieza").text('Modificar');
+        $("#cancel_pieza").text('Cancelar Modificar');
+        $("#cancel_pieza").removeAttr('disabled');
+        $("#tipo_pieza").removeAttr('disabled');
+        $("#tipo_pieza").parents('div').removeClass('disabled');
+
+        $("#delete_pieza").removeAttr('disabled');       
+
+        //data-id pieza
+        tipo = $('select#listado_pieza option:selected').attr('data-id');
+
+        //modificar radiobutton
+        $('li').find('div').removeClass('checked');
+        $('input#tipo_'+tipo).parents('div').addClass('checked');
+
+
+      
+
+        $("#id_pieza").val($(this).val());
+        $("#label_pieza").empty().text('Modificar: '+$("#listado_pieza option:selected").text());
+        $("#pieza").val($.trim($("#listado_pieza option:selected").text()));
+        
+
+      });
+
+      $("#cancel_pieza").bind("click", function(){
+        cancelar_modificar_pieza();
+      });
+
+      $("#delete_pieza").bind('click', function(){
+
+         swal({   
+                              title: "Eliminar Pieza",   
+                              text: "Seguro desea eliminar la Pieza?",   
+                              type: "warning",   
+                              showCancelButton: true,   
+                              confirmButtonColor: "#DD6B55",   
+                              confirmButtonText: "Si, Eliminar!",   
+                              cancelButtonText: "No, Cancelar!",   
+                              closeOnConfirm: false,   
+                              closeOnCancel: false 
+                          }, function(isConfirm){   
+                              if (isConfirm) {   
+
+                                var id_pieza = $("#id_pieza").val();
+
+                                  $("#delete_pieza").text('Eliminando ...');
+                                  $("#delete_pieza").attr('disabled','disabled');
+                                  $("#add_pieza").attr('disabled','disabled');
+                                  $("#cancel_pieza").attr('disabled','disabled');
+
+                                  if (id_pieza != ''){
+
+                                    $.post('{{path('mastro_pieza')}}', { 'action': 'eliminar_pieza', 'id_pieza': id_pieza })
+                                              .done(function (d) {                      
+                                                //modificar option del select 
+                                                $("select#listado_pieza option[value='"+d['id']+"']").remove();   
+                                                cancelar_modificar_pieza();
+
+                                                swal({   
+                                                    title: "Eliminar Pieza!",   
+                                                    text: "Se eliminó correctamente la Pieza!",  
+                                                    type:"success", 
+                                                    timer: 2500,   
+                                                    showConfirmButton: false 
+                                                  }); 
+
+
+                                          }).fail(function () {
+                                                  cancelar_modificar_pieza();
+
+                                                swal({   
+                                                    title: "Error!",   
+                                                    text: "No se puede eliminar la pieza porque se encuentra en uso, revisar los equipos que la utilizan!",  
+                                                    type:"error", 
+                                                    timer: 3500,   
+                                                    showConfirmButton: false 
+                                                });  
+                                            });
+
+                                  }
+
+                                }else {    
+                                  cancelar_modificar_pieza();
+                                  swal({   
+                                      title: "Cancelar!",   
+                                      text: "Eliminar Pieza fue cancelado!",  
+                                      type:"error", 
+                                      timer: 2500,   
+                                      showConfirmButton: false 
+                                  });
+                              }
+
+                               
+                          });
+
+        
+      });
+
+
+      $("#add_tipo_equipo").on('click',  function(){         
+
+            var tipo_equipo = $("#tipo_equipo").val();
+
+              
+
+            var color = $("#color").val();
+
+            var id_tipo_equipo = $("#id_tipo_equipo").val();
+
+            if (tipo_equipo != '' && id_tipo_equipo == 'add'){
+            var btn = $(this);
+            btn.attr('disabled','disabled')
+            $("#cancel_tipo_equipo").attr('disabled','disabled');
+                btn.text('Guardando...');
+
+              $.post('{{path('maestro_tipo_equipo')}}', { 'action': 'add_tipo_equipo', 'tipo_equipo' : tipo_equipo , 'color': color  })
+                    .done(function (d) {
+
+                      $("#tipo_equipo").val('');
+                      btn.removeAttr('disabled');
+                      $("#cancel_tipo_equipo").removeAttr('disabled');
+                      btn.text('Adicionar');
+                      //adicionar al select 
+                      if (d['ocultar'] == 'true'){
+                        $("#listado_tipo_equipo").append("<option data-id='YES' value='"+d['id']+"'>"+ d['nombre_equipo']+" </option>");
+                      }else{
+                        $("#listado_tipo_equipo").append("<option data-id='NO' value='"+d['id']+"'>"+ d['nombre_equipo']+" </option>");
+                      }
+                      
+
+                }).fail(function () {
+                      
+                  }); 
+
+            }//modificar tipo equipo
+            else if (tipo_equipo != '' && id_tipo_equipo != ''){
+
+
+              var btn = $(this);
+              if ($("#tipo_equipo_ocultar").parents('div').hasClass('checked') == true){
+                ocultar = true;
+              }else{
+                ocultar = false;
+              }
+
+            btn.attr('disabled','disabled');
+            $("#cancel_tipo_equipo").attr('disabled','disabled');
+            $("#delete_tipo_equipo").attr('disabled','disabled');
+                btn.text('Guardando...');
+
+              $.post('{{path('maestro_tipo_equipo')}}', { 'action': 'modificar_tipo_equipo', 'id_tipo_equipo': id_tipo_equipo ,'tipo_equipo' : tipo_equipo , 'ocultar': ocultar , 'color': color })
+                    .done(function (d) {
+
+                      $("#tipo_equipo").val('');
+                      btn.removeAttr('disabled');
+                      $("#cancel_tipo_equipo").removeAttr('disabled');
+                      btn.text('Adicionar');
+
+                      //modificar option del select 
+                      $("select#listado_tipo_equipo option[value='"+d['id']+"']").text(d['nombre_equipo']);
+
+                      $("select#listado_tipo_equipo option[value='"+d['id']+"']").attr('data-name', d['color']);
+                      
+                      if (d['ocultar'] == 'true'){
+                        $("select#listado_tipo_equipo option[value='"+d['id']+"']").attr('data-id', 'YES');
+                      }else if (d['ocultar'] == 'false' ){
+                        $("select#listado_tipo_equipo option[value='"+d['id']+"']").attr('data-id', 'NO');
+                      }
+                      
+                      cancelar_modificar_tipo_equipo();
+
+                }).fail(function () {
+                  cancelar_modificar_tipo_equipo();
+                      
+                  });
+
+            }       
+
+      });
+
+      $("#listado_tipo_equipo").on('change', function(){
+        
+        $("#add_tipo_equipo").text('Modificar');
+        $("#cancel_tipo_equipo").text('Cancelar Modificar');
+        $("#tipo_equipo_ocultar").removeAttr('disabled');
+        
+
+        $("#tipo_equipo_ocultar").parents('div').removeClass('disabled'); 
+
+        $("#delete_tipo_equipo").removeAttr('disabled');       
+
+        //data-id tipo equipo
+        ocultar = $('select#listado_tipo_equipo option:selected').attr('data-id');
+        secolor = $('select#listado_tipo_equipo option:selected').attr('data-name');
+        
+        if(ocultar == 'YES'){
+
+          if( $("#tipo_equipo_ocultar").parents('div').hasClass('checked') == false){
+            $("#tipo_equipo_ocultar").parents('div').addClass('checked');
+          }
+
+        }else if(ocultar == 'NO'){
+
+          if( $("#tipo_equipo_ocultar").parents('div').hasClass('checked') == true){
+                  $("#tipo_equipo_ocultar").parents('div').removeClass('checked'); 
+              } 
+        }     
+        
+        $('.cp7').colorpicker({ 
+          color: ''+secolor , 
+          container: true, 
+          inline: true, 
+        }).on('changeColor.colorpicker', function(event){
+          $('#color').val(event.color.toHex()); 
+
+      });
+
+        $('.cp7').colorpicker('setValue', secolor);
+      
+ 
+
+
+        $("#id_tipo_equipo").val($(this).val());
+        $("#label_tipo_equipo").empty().text('Modificar: '+$("#listado_tipo_equipo option:selected").text());
+        $("#tipo_equipo").val($.trim($("#listado_tipo_equipo option:selected").text()));
+        
+
+      });
+
+      $("#cancel_tipo_equipo").bind("click", function(){
+        cancelar_modificar_tipo_equipo();
+      });
+
+
+      $("#delete_tipo_equipo").bind('click', function(){
+       
+
+         swal({   
+                              title: "Eliminar Tipo Equipo",   
+                              text: "Seguro desea eliminar el Tipo Equipo?",   
+                              type: "warning",   
+                              showCancelButton: true,   
+                              confirmButtonColor: "#DD6B55",   
+                              confirmButtonText: "Si, Eliminar!",   
+                              cancelButtonText: "No, Cancelar!",   
+                              closeOnConfirm: false,   
+                              closeOnCancel: false 
+                          }, function(isConfirm){   
+                              if (isConfirm) {   
+                                var id_tipo_equipo = $("#id_tipo_equipo").val();
+
+                                $("#delete_tipo_equipo").text('Eliminando ...');
+                                $("#delete_tipo_equipo").attr('disabled','disabled');
+                                $("#add_tipo_equipo").attr('disabled','disabled');
+                                $("#cancel_tipo_equipo").attr('disabled','disabled');
+
+                                if (id_tipo_equipo != ''){
+
+                                  $.post('{{path('maestro_tipo_equipo')}}', { 'action': 'eliminar_tipo_equipo', 'id_tipo_equipo': id_tipo_equipo })
+                                            .done(function (d) {                      
+                                              //modificar option del select 
+                                              $("select#listado_tipo_equipo option[value='"+d['id']+"']").remove();   
+                                              cancelar_modificar_tipo_equipo();
+                                              swal({   
+                                                    title: "Eliminar Tipo Equipo!",   
+                                                    text: "Se eliminó correctamente el Tipo Equipo!",  
+                                                    type:"success", 
+                                                    timer: 2500,   
+                                                    showConfirmButton: false 
+                                                  }); 
+
+                                        }).fail(function () {
+                                                cancelar_modificar_tipo_equipo();
+                                                swal({   
+                                                    title: "Error!",   
+                                                    text: "No se puede eliminar el tipo equipo porque se encuentra en uso, revisar los equipos que lo utilizan!",  
+                                                    type:"error", 
+                                                    timer: 3500,   
+                                                    showConfirmButton: false 
+                                                });
+                                          });
+                                }     
+                                }else {    
+                                  cancelar_modificar_tipo_equipo();  
+                                  swal({   
+                                      title: "Cancelar!",   
+                                      text: "Eliminar Pieza fue cancelado!",  
+                                      type:"error", 
+                                      timer: 2500,   
+                                      showConfirmButton: false 
+                                  });
+
+                                  
+                              }
+
+                               
+                          });
+
+        
+
+      });
+
+      //cancelar modificar
+      function cancelar_modificar_tipo_equipo(){
+        $("#add_tipo_equipo").text('Adicionar');
+        $("#add_tipo_equipo").removeAttr('disabled');
+
+        $("#delete_tipo_equipo").text('Eliminar');
+        $("#delete_tipo_equipo").attr('disabled','disabled');
+        
+        $("#cancel_tipo_equipo").text('Cancelar');
+        $("#cancel_tipo_equipo").removeAttr('disabled');
+
+
+        $("select#listado_tipo_equipo option").removeAttr("selected");
+
+        $("#tipo_equipo_ocultar").removeAttr('data-id');
+        $("#tipo_equipo_ocultar").attr('disabled','disabled');        
+
+        $("#tipo_equipo_ocultar").parents('div').addClass('disabled');
+
+        if( $("#tipo_equipo_ocultar").parents('div').hasClass('checked') == true){
+                $("#tipo_equipo_ocultar").parents('div').removeAttr('checked'); 
+            }
+
+        $("#id_tipo_equipo").val('add');
+        $("#label_tipo_equipo").empty('');
+        $("#tipo_equipo").val('');
+
+        //color picker
+        $(".cp7").colorpicker('destroy');
+      }
+
+      //cancelar modificar
+      function cancelar_modificar_pieza(){
+        $("#add_pieza").text('Adicionar');
+        $("#add_pieza").removeAttr('disabled');
+
+        $("#delete_pieza").text('Eliminar');
+        $("#delete_pieza").attr('disabled','disabled');
+        
+        $("#cancel_pieza").text('Cancelar');
+        $("#cancel_pieza").removeAttr('disabled');
+
+        $("select#listado_pieza option").removeAttr("selected");
+        $("#delete_tipo_equipo").attr('disabled','disabled');
+
+        //modificar radiobutton
+        $('li').find('div').removeClass('checked');
+        $('input#tipo_1').parents('div').addClass('checked');
+
+        $("#id_pieza").val('add');
+        $("#label_pieza").empty('');
+        $("#pieza").val('');
+      }
+
+
+
+      //guardar parametros de la conexion 
+
+       $("#add_aft_conexion").on('click', function(){   
+
+            var id = $("#dba_aft_id").val();
+            var host = $("#dba_aft_host").val();
+            var port = $("#dba_aft_port").val();
+            var dbname = $("#dba_aft_dbname").val(); 
+            var user = $("#dba_aft_user").val();   
+            var password = $("#dba_aft_password").val();      
+
+            if ($.trim(host)!= '' && $.trim(dbname) != '' && $.trim(user) != '' && $.trim(password) != '' ){
+           
+              $.post('{{path('conexion_db')}}', { 
+                    'action': 'conexion_aft', 
+                    'id' : id, 
+                    'host': $.trim(host),
+                    'port': $.trim(port),  
+                    'dbname': $.trim(dbname), 
+                    'user': $.trim(user),
+                    'password': $.trim(password), 
+                    'tipo': 'AFT'   
+
+                  }).done(function (d) {   
+
+                   
+                    swal({   
+                        title: "Guardando",   
+                        text: "Se guardó corectamente la conexión",  
+                        type:"success", 
+                        timer: 2500,   
+                        showConfirmButton: false 
+                    }); 
+                                
+
+                }).fail(function () {
+                  //existe un error al guardar
+                  alerta_error(); 
+                });
+            }else{
+
+              swal("Existen Campos Vacios!", "Revise que no falten datos por insertar.");
+               
+          }
+
+      });
+
+       $("#add_stock_conexion").on('click', function(){   
+
+            var id = $("#dba_stock_id").val();
+            var host = $("#dba_stock_host").val();
+            var port = $("#dba_stock_port").val();
+            var dbname = $("#dba_stock_dbname").val(); 
+            var user = $("#dba_stock_user").val();   
+            var password = $("#dba_stock_password").val();      
+
+            if ($.trim(host)!= '' && $.trim(dbname) != '' && $.trim(user) != '' && $.trim(password) != '' ){
+           
+              $.post('{{path('conexion_db')}}', { 
+                    'action': 'conexion_stock', 
+                    'id' : id, 
+                    'host': $.trim(host),
+                    'port': $.trim(port),  
+                    'dbname': $.trim(dbname), 
+                    'user': $.trim(user),
+                    'password': $.trim(password), 
+                    'tipo': 'STOCK'   
+
+                  }).done(function (d) {   
+
+                   
+                    swal({   
+                        title: "Guardando",   
+                        text: "Se guardó corectamente la conexión",  
+                        type:"success", 
+                        timer: 2500,   
+                        showConfirmButton: false 
+                    }); 
+                                
+
+                }).fail(function () {
+                  //existe un error al guardar
+                  alerta_error(); 
+                });
+            }else{
+
+              swal("Existen Campos Vacios!", "Revise que no falten datos por insertar.")
+            }    
+
+      });
+
+
+
+
+
+       function alerta_error(){
+
+        //Auto Close Timer
+        
+             swal({   
+                title: "Error!",   
+                text: "Algo salió mal, por favor vuelva a intentarlo", 
+                type: "warning",   
+                timer: 3000,   
+                showConfirmButton: false 
+            });
+       
+      }
+
+
+        // end document
+      });  
+        
+
+
+              
+      
+
+   </script>
+
+{% endblock %}
+

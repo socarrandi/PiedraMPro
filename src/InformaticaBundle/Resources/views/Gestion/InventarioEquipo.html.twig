@@ -1,0 +1,248 @@
+{% extends '::base_pro.html.twig' %}
+
+{% block title %} Inventario Piezas de Equipo {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+
+    
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/horizontal/css/pages/floating-label.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/css/footable.standalone.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/css/jquery-confirm.css')}}"/>
+
+
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/multiselect/css/multi-select.css')}}"/>
+
+
+
+   
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {{ include('InformaticaBundle:include:preloder.html.twig', {'loader_label':'Inventario Piezas de Equipo' } ) }}
+
+  {% include 'InformaticaBundle:include:header.html.twig' %}
+  {% include 'InformaticaBundle:include:aside.html.twig' %}
+
+
+  <div class="page-wrapper" style="min-height: 502px;">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        {{ include('InformaticaBundle:include:page_titles.html.twig', {'titulo_pagina':'Inventario Piezas de Equipo', 'session': 'Informática' } ) }}                          
+                        
+    <div class="row">
+           
+
+          <!-- MODAL EDITOR movimiento aft -->
+          <div class="modal fade" id="editor-inventario_piezas_equipo" tabindex="-1" role="dialog" aria-labelledby="editor-inventario_piezas_equipo-title">
+  
+          <div class="modal-dialog modal-lg" role="document">
+            <form class="modal-content form-horizontal" id="form-inventario_piezas_equipo">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="editor-title">Adicionar Teléfono</h4>
+              </div>
+
+              <div class="modal-body floating-labels">
+                <input type="number" id="id" name="id" hidden="hidden" />
+              
+                <div class="form-group col-md-12 col-xs-12 m-t-20 focused">
+                  <input class="form-control" id="inventario_piezas_equipo" type="text"/>
+                  <span class="bar"></span>
+                  <label for="inventario_piezas_equipo">TELÉFONO/S</label>
+                  <span class="help-block"><small>Teléfono/s.</small></span>
+                </div> 
+
+                 <div class="form-group col-md-12 col-xs-12 m-b-5">
+                    <textarea class="form-control" rows="3" id="descripcion" ></textarea>
+                    <span class="bar"></span>
+                    <label for="descripcion">Descripción</label>
+                </div> 
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>        
+            </form>          
+          </div>  
+        </div>
+        <!-- end MODAL EDITOR movimiento aft-->
+
+
+    </div>
+
+    
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+          <div class="card">            
+            <div class="card-body">  
+              <div class="d-flex">                  
+                <h4 id="card-title-mov" class="card-title"> <span class="lstick"></span>LISTADO PIEZAS DE EQUIPO | UNIDAD: {{ unidad.unidad }}</h4>
+              </div>
+              <table id="table_inventario_piezas_equipo" class="table table-hover table_inventario_piezas_equipo" data-paging="true" data-filtering="true" data-sorting="true" >  
+
+              </table>  
+                           
+            </div>
+          </div>
+
+            
+        </div>
+      </div>     
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+     {% include 'InformaticaBundle:include:footer.html.twig' %}
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+  </div>
+
+  
+  
+
+  </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/moment/moment.js')}}"></script>  
+     <!--Custom JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/horizontal/js/custom.min.js')}}"></script>
+
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/multiselect/js/jquery.multi-select.js')}}"></script>
+
+          
+
+    <!-- Footable -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/js/footable.min.js')}}"></script>
+
+    <script  src="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/js/jquery-confirm.js')}}"></script>
+
+
+
+
+    <script type="text/javascript" charset="utf-8" async defer>
+
+    $(window).on('load', function() {     
+                  
+
+          var $modal = $('#editor-inventario_piezas_equipo'),
+          $editor = $('#form-inventario_piezas_equipo'),
+          $editorTitle = $('#editor-title'),
+          ft = FooTable.init('#table_inventario_piezas_equipo', {
+
+            columns: [
+                  {"name":"id","title":"ID", "type":"number","breakpoints":"xs sm"},
+                  {"name":"tipo_equipo","title":"TIPO EQUIPO", "breakpoints":"xs sm"},
+                  {"name":"pieza","title":"PIEZA", "breakpoints":"xs sm"},
+                  {"name":"marca","title":"MARCA", "breakpoints":"xs sm"},                                 
+                  {"name":"modelo","title":"MODELO", "breakpoints":"xs sm"},
+                  {"name":"ctecnica","title":"CTECNICA", "breakpoints":"xs sm"},
+                  {"name":"serial","title":"SERIAL", "breakpoints":"xs sm"},
+                  {"name":"observacion","title":"OBSERVACIÓN", "breakpoints":"xs sm"},
+                  {"name":"responsable","title":"RESPONSABLE", "breakpoints":"all"},
+                  {"name":"local","title":"ÁREA / LOCAL", "breakpoints":"all"},
+                  {"name":"medio_basico","title":"MEDIO BÁSICO", "breakpoints":"all"},
+                  {"name":"no_inventario","title":"NO. SUBMAYOR", "breakpoints":"all"},
+                  {"name":"fecha","title":"FECHA", "breakpoints":"all"},
+                  {"name":"sello","title":"SELLO", "breakpoints":"all"}
+
+              ],
+              rows: $.post('{{path('inventario_piezas_equipo')}}', { 'action': 'rows_inventario_piezas_equipos' }).fail(function () { alerta_error();}),
+             
+          });
+
+          $editor.on('submit', function(e){
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+            var r =$("select#responsable option[value='"+$editor.find('#responsable').val()+"']").attr('data-id');            
+
+            var row = $modal.data('row'),
+                values = {
+                  id: $editor.find('#id').val(),     
+                  inventario_piezas_equipo: $editor.find('#inventario_piezas_equipo').val(),
+                  responsable_id: $editor.find('#responsable').val(),
+                  responsable: r,
+                  descripcion: $editor.find('#descripcion').val()
+                };
+
+                if (row instanceof FooTable.Row){
+                  row.val(values);
+                  $.post('{{path('inventario_piezas_equipo')}}', { 'action': 'editar_inventario_piezas_equipo', 'inventario_piezas_equipo': values }).fail(function () { alerta_error();});
+                }
+                $modal.modal('hide');
+          });
+          
+
+
+       
+
+
+        function alerta_error(){
+         $.alert({
+              title: 'Error',
+              icon: 'fa fa-warning',
+              type: 'red',
+              content: 'Algo salió mal, por favor vuelva a intentarlo'                      
+          });
+        }
+
+
+        // filtrar tabla
+        $('#buscar').on('keyup',function(){
+          var that = this, $allListElements = $('#table_telefono').find('tbody').find('tr');
+          var $matchingListElements = $allListElements.filter(function(i, li){
+          var listItemText = $(li).text().toUpperCase(),
+          searchText = that.value.toUpperCase();
+          return ~listItemText.indexOf(searchText);
+          });
+          $allListElements.hide();
+          $matchingListElements.show();
+        });
+
+
+        
+
+
+        // end document
+      });  
+        
+
+
+              
+      
+
+   </script>
+
+{% endblock %}
+

@@ -1,0 +1,333 @@
+{% extends '::base_pro.html.twig' %}
+
+{% block title %} Teléfonos {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+
+    
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/horizontal/css/pages/floating-label.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/css/footable.standalone.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/css/jquery-confirm.css')}}"/>
+
+
+  <!-- select css -->
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/select2/dist/css/select2.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/switchery/dist/switchery.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-select/bootstrap-select.min.css')}}"/>
+
+
+
+   
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {{ include('InformaticaBundle:include:preloder.html.twig', {'loader_label':'Listados de Teléfonos' } ) }}
+
+  {% include 'InformaticaBundle:include:header.html.twig' %}
+  {% include 'InformaticaBundle:include:aside.html.twig' %}
+
+
+  <div class="page-wrapper" style="min-height: 502px;">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        {{ include('InformaticaBundle:include:page_titles.html.twig', {'titulo_pagina':'Movimientos', 'session': 'Informática' } ) }}                          
+                        
+    <div class="row">
+           
+
+          <!-- MODAL EDITOR movimiento aft -->
+          <div class="modal fade" id="editor-telefono" tabindex="-1" role="dialog" aria-labelledby="editor-telefono-title">
+  
+          <div class="modal-dialog modal-lg" role="document">
+            <form class="modal-content form-horizontal" id="form-telefono">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="editor-title">Adicionar Teléfono</h4>
+              </div>
+
+              <div class="modal-body">
+                <input type="number" id="id" name="id" hidden="hidden" />
+                
+                <div class="form-group col-md-12 col-xs-12 m-t-20 focused">
+                  <label for="responsable">RESPONSABLE</label>
+                    <select class="selectpicker"  data-live-search="true" id="responsable"> 
+                    	{% for r in responsables %}
+                    		<option data-id="[{{r.local}}] {{ r.responsable }}" value="{{r.id }}"> [{{r.local}}] {{ r.responsable }}</option>
+                    	{%endfor%}                    		                                                  
+                    </select>
+                    
+                </div>
+
+                <div class="form-material col-md-12 col-xs-12 m-t-20 focused">
+                  <label for="telefono">TELÉFONO/S</label>
+                  <input class="form-control" id="telefono" type="text"/>   
+                  <span class="help-block"><small>Teléfono/s.</small></span>
+                </div> 
+
+                 <div class="form-material col-md-12 col-xs-12 m-b-5">
+                    <label for="descripcion">DESCRIPCIÓN</label>
+                    <textarea class="form-control" rows="3" id="descripcion" ></textarea>
+                                        
+                </div> 
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>        
+            </form>          
+          </div>  
+        </div>
+        <!-- end MODAL EDITOR movimiento aft-->
+
+
+    </div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+          <div class="card">            
+            <div class="card-body">  
+              <div class="d-flex">                  
+                <h4 id="card-title-mov" class="card-title"> <span class="lstick"></span>LISTADO MOVIMIENTOS DE AFT</h4>
+              </div>
+              <table id="table_telefono" class="table table-hover table_telefono" data-paging="true" data-filtering="true" data-sorting="true" >  
+
+              </table>  
+                           
+            </div>
+          </div>
+
+            
+        </div>
+      </div>     
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+     {% include 'InformaticaBundle:include:footer.html.twig' %}
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+  </div>
+
+  
+  
+
+  </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/moment/moment.js')}}"></script>  
+     <!--Custom JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/horizontal/js/custom.min.js')}}"></script>
+
+    <!-- Select -->   
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/switchery/dist/switchery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/select2/dist/js/select2.full.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+
+          
+
+    <!-- Footable -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/js/footable.min.js')}}"></script>
+
+    <script  src="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/js/jquery-confirm.js')}}"></script>
+
+
+
+
+    <script type="text/javascript" charset="utf-8" async defer>
+
+    $(window).on('load', function() {     
+
+      $(".selectpicker").selectpicker();
+                  
+
+          var $modal = $('#editor-telefono'),
+          $editor = $('#form-telefono'),
+          $editorTitle = $('#editor-telefono-title'),
+          ft = FooTable.init('#table_telefono', {
+
+            columns: [
+                  {"name":"id","title":"ID", "type":"number","breakpoints":"xs sm"},
+                  {"name":"telefono","title":"TELÉFONO", "breakpoints":"xs sm"},
+                  {"name":"responsable","title":"RESPONSABLE", "breakpoints":"xs sm"},                                 
+                  {"name":"descripcion","title":"DESCRIPCIÓN", "breakpoints":"xs sm"},
+                  {"name":"responsable_id","title":"RESPONSABLE ID", "breakpoints":"all"},
+
+              ],
+              rows: $.post('{{path('telefono')}}', { 'action': 'rows_telefonos' }).fail(function () { alerta_error();}),
+              filtering: {
+                  enabled: true,
+                  placeholder: "Buscar Teléfono.." 
+              }, 
+              editing: {
+                enabled: true, 
+                editText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span>', 
+                addText: '<span class="mdi mdi-lead-pencil" aria-hidden="true">Adicionar Teléfono</span>',  
+                deleteText: '<span class="mdi mdi-delete-forever" aria-hidden="true"></span>',
+                showText: '<span class="mdi mdi-lead-pencil" aria-hidden="true"></span> Editar Teléfono',    
+                addRow: function(){
+                  //checked     
+                  $modal.removeData('row');
+                  $editor[0].reset();
+                  $editorTitle.text('Adicionar Teléfono');
+                  $modal.modal('show');
+                },         
+                editRow: function(row){
+                  var values = row.val();
+                  $editor.find('#id').val(values.id);
+                  $editor.find('#telefono').val(values.telefono);
+                  $editor.find('#responsable').val(values.responsable_id);
+                  $editor.find('#descripcion').val(values.descripcion);
+
+                  $modal.data('row', row);
+                  $editorTitle.text('Editar Teléfono');
+                  $modal.modal('show');
+                },
+                deleteRow: function(row){
+                    $.confirm({
+                    title: 'Teléfono!',
+                    content: 'Seguro desea eliminar el Teléfono? ',
+                    icon: 'fa fa-question-circle',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    opacity: 0.5,
+                    buttons: {
+                        'confirm': {
+                            text: 'Eliminar',
+                            btnClass: 'btn-red',
+                            action: function () {   
+                            var values = row.val();
+                            $.post('{{path('telefono')}}', { 'action': 'eliminar_telefono', 'id': values.id  })
+                                        .done(function (d) {  
+                                          row.delete();
+
+                                          if (d == true){
+                                            $.alert({
+                                                title: 'Mensaje',
+                                                content: 'Se eliminó corectamente el Teléfono',
+                                                type: 'blue',
+                                                animation: 'scale',
+                                                draggable: true,
+                                            });
+                                          }                                          
+                                        }).fail(function () {
+                                          alerta_error();
+                                      });                                
+                            }
+                        },
+                        cancel: function () {
+                            $.alert('El eliminar Teléfono fue cancelado!');
+                        }
+                       }
+                        });
+                  
+                }
+              }
+          });
+
+          $editor.on('submit', function(e){
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+            var r =$("select#responsable option[value='"+$editor.find('#responsable').val()+"']").attr('data-id');            
+
+            var row = $modal.data('row'),
+                values = {
+                  id: $editor.find('#id').val(),     
+                  telefono: $editor.find('#telefono').val(),
+                  responsable_id: $editor.find('#responsable').val(),
+                  responsable: r,
+                  descripcion: $editor.find('#descripcion').val()
+                };
+
+                if (row instanceof FooTable.Row){
+                  row.val(values);
+                  $.post('{{path('telefono')}}', { 'action': 'editar_telefono', 'telefono': values }).fail(function () { alerta_error();});
+                }else{
+
+                  $.post('{{path('telefono')}}', { 'action': 'add_telefono', 'telefono': values }).done(function(id){
+
+                        values.id = id;
+                        ft.rows.add(values);
+
+                  }).fail(function () { alerta_error();});
+
+                
+                } 
+                $modal.modal('hide');
+          });
+
+
+
+          
+
+
+       
+
+
+        function alerta_error(){
+         $.alert({
+              title: 'Error',
+              icon: 'fa fa-warning',
+              type: 'red',
+              content: 'Algo salió mal, por favor vuelva a intentarlo'                      
+          });
+        }
+
+
+        // filtrar tabla
+        $('#buscar').on('keyup',function(){
+          var that = this, $allListElements = $('#table_telefono').find('tbody').find('tr');
+          var $matchingListElements = $allListElements.filter(function(i, li){
+          var listItemText = $(li).text().toUpperCase(),
+          searchText = that.value.toUpperCase();
+          return ~listItemText.indexOf(searchText);
+          });
+          $allListElements.hide();
+          $matchingListElements.show();
+        });
+
+
+        
+
+
+        // end document
+      });  
+        
+
+
+              
+      
+
+   </script>
+
+{% endblock %}
+

@@ -1,0 +1,287 @@
+<?php
+
+namespace AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Table(name="usuario") 
+ * @ORM\Entity(repositoryClass="AdminBundle\Repository\UsuarioRepository")
+ */
+class Usuario implements AdvancedUserInterface, \Serializable {
+    
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+    public function getPassword()   
+    {
+        return $this->password;
+    }    
+    public function getUsername()  
+    {
+        return $this->username;
+    }
+    
+    public function getRoles()
+    {
+        return $this->groups->toArray();
+    }
+    
+    public function eraseCredentials()
+    {
+        return false;
+    }
+    public function isEqualTo(UserInterface $user)
+    {
+        return $this->id === $user->getId();
+    }
+    
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->active;
+    }
+    
+    
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */     
+    protected $id;
+    
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
+    protected $username;
+    
+    
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()  
+     */
+    protected $password;
+    
+    /**
+     * @ORM\Column(name="active", type="boolean")
+     */
+    protected $active;
+
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $salt;
+    
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank() 
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank() 
+     */
+    protected $avatar;
+       
+        
+    /**
+     * @ORM\ManyToMany(targetEntity="Rol", inversedBy="users")
+     *
+     */
+    protected $groups;
+
+  
+    public function __construct()
+    {
+        $this->active = FALSE;
+
+        $this->salt = "";
+        $this->avatar = "";
+        $this->groups = new ArrayCollection();        
+    }
+
+
+    
+    
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,    
+        ) = unserialize($serialized);
+    }
+   
+
+    /**
+     * Add groups
+     *
+     * @param \AdminBundle\Entity\Rol $groups
+     * @return Usuario
+     */
+    public function addGroup(\AdminBundle\Entity\Rol $groups)
+    {
+        $this->groups[] = $groups;
+    
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \AdminBundle\Entity\Rol $groups
+     */
+    public function removeGroup(\AdminBundle\Entity\Rol $groups)
+    {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+
+
+
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return Usuario
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return Usuario
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return Usuario
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     *
+     * @return Usuario
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Usuario
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+}

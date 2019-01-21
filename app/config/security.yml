@@ -1,0 +1,45 @@
+security:
+  role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER , ROLE_RRHH , ROLE_INFORMATICA]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js|uploads)/
+      security: false 
+    secured_area:
+      pattern: ^/
+      anonymous: ~           
+      form_login:
+          check_path: /check
+          login_path: /login
+          default_target_path: /informatica/equipo
+          always_use_default_target_path: true
+          use_referer:  true
+
+      logout:
+          path:   /logout
+          target: /login
+
+   
+        
+  access_control:
+   - { path: ^/rrhh , roles: ROLE_RRHH }
+   - { path: ^/informatica, roles: ROLE_INFORMATICA }
+   - { path: ^/admin , roles: ROLE_ADMIN }
+
+
+  providers:
+    main:
+      entity:
+        class: InformaticaBundle\Entity\Usuario
+        property: username
+
+  encoders:
+    InformaticaBundle\Entity\Usuario:
+      algorithm: sha1
+      encode_as_base64: false
+      iterations: 1
+    InformaticaBundle\Entity\Conexion:
+      algorithm: sha1
+      encode_as_base64: false
+      iterations: 1

@@ -1,0 +1,128 @@
+{% extends '::base_pro.html.twig' %}
+
+{% block title %} Teléfonos {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+
+    
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/horizontal/css/pages/floating-label.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/css/footable.standalone.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/css/jquery-confirm.css')}}"/>
+
+
+  <!-- select css -->
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/select2/dist/css/select2.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/switchery/dist/switchery.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-select/bootstrap-select.min.css')}}"/>
+
+
+
+   
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {{ include('InformaticaBundle:include:preloder.html.twig', {'loader_label':'Listados de Teléfonos' } ) }}
+
+  {% include 'InformaticaBundle:include:header.html.twig' %}
+  {% include 'InformaticaBundle:include:aside.html.twig' %}
+
+
+  <div class="page-wrapper" style="min-height: 502px;">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        {{ include('InformaticaBundle:include:page_titles.html.twig', {'titulo_pagina':'Movimientos', 'session': 'Informática' } ) }}                          
+                        
+    <div class="row">
+           
+
+        
+
+
+    </div>
+     
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+     {% include 'InformaticaBundle:include:footer.html.twig' %}
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+  </div>
+
+  
+  
+
+  </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/moment/moment.js')}}"></script>  
+     <!--Custom JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/horizontal/js/custom.min.js')}}"></script>
+
+    <!-- Select -->   
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/switchery/dist/switchery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/select2/dist/js/select2.full.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+
+          
+
+    <!-- Footable -->
+    <script type="text/javascript" src="{{asset('bundles/informatica/adminpro/assets/plugins/footable3/footable-standalone/js/footable.min.js')}}"></script>
+
+    <script  src="{{asset('bundles/informatica/adminpro/assets/plugins/jquery-confirm-v3.3.0/js/jquery-confirm.js')}}"></script>
+
+
+
+
+    <script type="text/javascript" charset="utf-8" async defer>
+
+    $(window).on('load', function() {     
+
+      $(".selectpicker").selectpicker();
+                  
+
+        
+
+        
+
+
+        // end document
+      });  
+        
+
+
+              
+      
+
+   </script>
+
+{% endblock %}
+

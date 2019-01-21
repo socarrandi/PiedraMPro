@@ -1,0 +1,42 @@
+<aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav active">
+                    <ul id="sidebarnav" class="in">
+                        <li class="nav-devider"></li>
+                        <li class="nav-small-cap">PERSONAL</li>
+                        
+                        <!-- Gestion Informatica -->
+                        {% if is_granted('ROLE_INFORMATICA') %}
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-archive"></i><span class="hide-menu">Informática</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                            	<li> <a href="{{path('maestro_general_pro')}}"> - Maestros Generales </a> </li>
+								<li> <a href="{{path('inventario_equipo')}}"> - Inventario Equipo </a> </li>  
+                                <li> <a href="{{path('movimiento')}}"> - Movimientos </a> </li>                                
+                            </ul>
+                        </li>
+                        {% endif %} 
+                        <!-- END Gestion Informatica -->  
+
+                        <!-- Gestion -->
+                        {% if is_granted('ROLE_INFORMATICA') %}
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-archive"></i><span class="hide-menu">Piedra Movida</span></a>
+                            <ul aria-expanded="false" class="collapse">                            
+                            
+                            <li> <a href="{{path('gestionar_usuario_dominio')}}"> - Usuarios Dominio</a> </li>
+                            <li> <a href="{{path('adicionar_documento')}}">- Documento</a></li>
+                            <li> <a href="{{path('adicionar_password_setup')}}"> - Password Setup</a></li>
+                            <li> <a href="{{path('gestionar_telefono')}}"> - Teléfonos </a></li>  
+                            <li> <a href="{{path('telefono')}}"> - Teléfonos </a></li>                                  
+                            </ul>
+                        </li>
+                        {% endif %} 
+                        <!-- END Gestion -->                    
+                      
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>

@@ -1,0 +1,230 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Gestionar Departamento{% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+    
+
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/select2/select2.css')}}"/>
+
+    <link rel="stylesheet" type="text/css" href="{{asset('bundles/piedra/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css')}}"/>
+
+    
+    
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+	{% include 'PiedraBundle:include:header.html.twig' %}
+
+	<!-- END HEADER -->
+	<div class="clearfix"></div>
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+		
+
+	{% include 'PiedraBundle:include:sidebar.html.twig' %}
+
+
+
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<!-- BEGIN  MODAL Adicionar Departamento-->
+			<div class="modal fade" id="modalDepartamento" tabindex="-1" role="dialog" aria-labelledby="modalDepartamento" aria-hidden="true">
+				<div class="modal-dialog">
+
+				<form role="form" action="{{path('adicionar_departamento')}}" method="post" accept-charset="utf-8">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							<h4 class="modal-title">Adicionar Departamento</h4>
+						</div>
+						<div class="modal-body">
+							 
+							 	<div class="form-body">
+									<div class="form-group form-md-line-input">
+										<input type="text" class="form-control" id="departamento" name="departamento" placeholder="Departamento">
+										
+										<span class="help-block">Adicionar el Departamento...</span>
+									</div>
+							    </div>
+							    </br>
+							 
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn blue">Adicionar</button>
+							<button type="button" class="btn default" data-dismiss="modal">Cancelar</button>
+						</div>
+					</div>
+
+					</form>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN PAGE HEADER-->
+			<!-- BEGIN PAGE HEAD -->
+			<div class="page-head">
+				<!-- BEGIN PAGE TITLE -->
+				<div class="page-title">
+					<h1>Adicionar Departamento <small>listado de departamentos</small></h1>
+				</div>
+				<!-- END PAGE TITLE -->
+				
+			</div>
+			<!-- END PAGE HEAD -->
+			
+			<!-- END PAGE HEADER-->
+
+
+			<!-- BEGIN PAGE CONTENT-->
+			
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN EXAMPLE TABLE PORTLET-->
+					<div class="portlet box blue">
+						<div class="portlet-title">
+							<div class="caption">
+								Listado Departamentos
+							</div>
+							
+						</div>
+						<div class="portlet-body">
+							<div class="table-toolbar">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="btn-group">
+											<a href="#modalDepartamento" data-toggle="modal" class="btn green">
+											Adicionar Departamento <i class="fa fa-plus"></i>
+											</a>											
+										</div>
+
+
+									</div>
+									<div class="col-md-6">
+										<div class="input-icon">
+										<i class="fa fa-search"></i>
+										<input class="form-control" type="text" id="myInput" placeholder="Buscar Departamento">
+									</div>
+									</div>
+									
+								</div>
+							</div>
+							
+							<div class="scroller"  style="height: 350px;">
+							<table id="table_departamentos" class="table table-striped table-hover table-bordered dataTable" >
+	                            <thead>
+	                            <tr>
+	                                <th> No. </th>
+	                                <th>Departamento</th>
+	                                <th></th>
+	                                
+	                            </tr>
+	                            </thead>
+	                            <tbody>
+	                            	{% for d in departamentos %}
+	                            		<tr class="tr">
+	                            			<td>{{ d.id}}</td>
+	                            			<td>{{ d.nombre}}</td>
+	                            			<td><a class="btn btn-sm btn-success" href="{{path('inventario_departamento',{idD: d.id})}}">INVENTARIO </a></td>
+	                            		</tr>
+	                            	{% endfor %}
+	                            </tbody>
+                        	</table>
+                        	</div>
+
+						</div>
+					</div>
+					<!-- END EXAMPLE TABLE PORTLET-->
+				</div>
+			</div>
+			<!-- END PAGE CONTENT -->
+		</div>
+	</div>
+
+	</div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    
+
+
+
+
+<script  src="{{asset('bundles/piedra/global/plugins/jquery-tabledit/jquery.tabledit.js')}}"></script>
+
+
+
+    <script type="text/javascript"> 
+
+
+
+      $('#table_departamentos').Tabledit({
+        url: '{{path('adicionar_departamento')}}',
+        editButton: false,       
+        editmethod: 'post',
+        deletemethod: 'post',
+        buttons: {
+            delete: {
+                class: 'btn btn-sm btn-danger',
+                html: '<span class="glyphicon glyphicon-trash"></span> &nbsp ELIMINAR',
+                action: 'delete'
+            },
+            edit: {
+            class: 'btn btn-sm btn-primary',
+            html: '<span class="glyphicon glyphicon-pencil"></span> &nbsp EDIT',
+            action: 'edit'
+            },
+            save: {
+              class: 'btn btn-sm btn-success',
+              html: 'Save'
+            },
+            restore: {
+              class: 'btn btn-sm btn-warning',
+              html: 'Restore',
+              action: 'restore'
+            },
+            confirm: {
+                class: 'btn btn-sm btn-default',
+                html: 'CONFIRMAR'
+            }
+        },
+
+        columns: {
+          identifier: [0, 'id'],                    
+          editable: [[1, 'departamento']]
+        }, 
+      });
+
+
+      // filtrar tabla
+    $('#myInput').keyup(function(){
+			var that = this, $allListElements = $('.tr');
+			var $matchingListElements = $allListElements.filter(function(i, li){
+			var listItemText = $(li).text().toUpperCase(),
+			searchText = that.value.toUpperCase();
+			return ~listItemText.indexOf(searchText);
+			});
+			$allListElements.hide();
+			$matchingListElements.show();
+	});
+
+
+
+    </script>
+    <!-- END PAGE LEVEL PLUGINS -->
+
+{% endblock %}
+

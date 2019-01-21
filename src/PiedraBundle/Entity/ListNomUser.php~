@@ -1,0 +1,114 @@
+<?php
+
+namespace PiedraBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ListNomUser
+ *
+ * @ORM\Table(name="list_nom_user")
+ * @ORM\Entity(repositoryClass="PiedraBundle\Repository\ListNomUserRepository")
+ */
+class ListNomUser
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apellidos", type="string", length=255)
+     */
+    private $apellidos;
+
+    /**     
+     *@ORM\ManyToOne(targetEntity="PiedraBundle\Entity\Cargo", inversedBy="ListNomUser")
+     *@ORM\JoinColumn(name="cargo_id", referencedColumnName="id")
+     **/
+    private $cargo;
+
+    
+    /**     
+     *@ORM\ManyToOne(targetEntity="PiedraBundle\Entity\usuarioRed", inversedBy="ListNomUser")
+     *@ORM\JoinColumn(name="usuario_red_id", referencedColumnName="id")
+     **/
+    private $usuarioRed;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="navNacional", type="boolean")
+     */
+    private $navNacional;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="navInternet", type="boolean")
+     */
+    private $navInternet;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="emailNacional", type="boolean")
+     */
+    private $emailNacional;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="emailInternet", type="boolean")
+     */
+    private $emailInternet;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="ftp", type="boolean")
+     */
+    private $ftp;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="chat", type="boolean")
+     */
+    private $chat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observaciones", type="string", length=255)
+     */
+    private $observaciones;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+   
+
+    
+}

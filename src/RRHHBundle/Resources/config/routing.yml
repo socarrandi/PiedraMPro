@@ -1,0 +1,38 @@
+adicionar_contrato:
+    path:      /adicionar_contrato
+    defaults:  { _controller: RRHHBundle:Default:adicionarContrato }
+
+editar_contrato:
+    path:      /editar_contrato/{IdContrato}
+    defaults:  { _controller: RRHHBundle:Default:editarContrato }
+
+editar_otros_datos_contacto:
+    path:      /editar_otros_datos_contacto/{IdContrato}
+    defaults:  { _controller: RRHHBundle:Default:editarOtrosDatosContacto }
+
+listado_contrato:
+    path:      /listado_contrato
+    defaults:  { _controller: RRHHBundle:Default:listadoContrato }
+
+gestionar_unidad:
+    path:      /gestionar_unidad
+    defaults:  { _controller: RRHHBundle:Default:gestionarUnidad }
+
+
+
+########## Exportar Excel y PDF #######
+
+exportar_contratos:
+    path:     /exportar_contratos
+    defaults: { _controller: RRHHBundle:Exportar:exportarContratos }
+
+exportar_contrato:
+    path:     /exportar_contrato/{IdContrato}
+    defaults: { _controller: RRHHBundle:Exportar:exportarContrato }
+
+
+###### Chequet #####
+
+checked_no_contrato:
+    path:     /checked_no_contrato
+    defaults: { _controller: RRHHBundle:Default:checkedNoContrato }

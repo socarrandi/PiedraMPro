@@ -1,0 +1,520 @@
+{% extends '::base_pro.html.twig' %}
+
+{% block title %} Inventario {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/admin/adminpro/assets/plugins/footable3/footable-standalone/css/footable.standalone.min.css')}}"/>
+  <link rel="stylesheet" type="text/css" href="{{asset('bundles/admin/adminpro/assets/plugins/jquery-confirm-v3.3.0/css/jquery-confirm.css')}}"/>
+   
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {{ include('InformaticaBundle:include:preloder.html.twig', {'loader_label':'Listados de Movimientos' } ) }}
+
+  {% include 'InformaticaBundle:include:header.html.twig' %}
+  {% include 'InformaticaBundle:include:aside.html.twig' %}
+
+
+  <div class="page-wrapper" style="min-height: 502px;">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        {{ include('InformaticaBundle:include:page_titles.html.twig', {'titulo_pagina':'Movimientos', 'session': 'Informática' } ) }}                          
+                        
+    <div class="row">
+          <div class="modal fade" id="modal_inventario" tabindex="-1" role="dialog" aria-hidden="true" data-toggle="modal" >
+            <div class="modal-dialog modal-xlg">
+              <div class="modal-content">
+                <div class="modal-header">                                    
+                  <h4 class="modal-title" id="h4_title_inventario"> </h4>
+                  <button type="button" class="close" data-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modal-body-inventario-equipo">    
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-success" id="add_parte_pieza"> Adicionar Parte y Piezas </button>
+                  <button type="button" class="btn default" data-dismiss="modal">Cancelar</button>
+                  
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+                  <!-- /.modal-dialog -->
+          </div> 
+
+          <!-- MODAL EDITOR movimiento aft -->
+          <div class="modal fade" id="editor-movimientoaft" tabindex="-1" role="dialog" aria-labelledby="editor-movimientoaft-title">
+  
+          <div class="modal-dialog modal-lg" role="document">
+            <form class="modal-content form-horizontal" id="form-movimientoaft">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="editor-title">Adicionar Movimiento AFT</h4>
+              </div>
+              <div class="modal-body">
+                <input type="number" id="id" name="id" hidden="hidden" />
+                <div class="form-group required">
+                  <label for="observacion" class="col-sm-4 control-label">Observación</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="observacion" name="observacion" placeholder="Observacion" required>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>        
+            </form>          
+          </div>  
+        </div>
+        <!-- end MODAL EDITOR movimiento aft-->
+
+        <!-- MODAL EDITOR movimiento  -->
+          <div class="modal fade" id="editor-movimiento" tabindex="-1" role="dialog" aria-labelledby="editor-movimiento-title">
+  
+          <div class="modal-dialog modal-lg" role="document">
+            <form class="modal-content form-horizontal" id="form-movimiento">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="editor-title">Adicionar Movimiento AFT</h4>
+              </div>
+              <div class="modal-body">
+                <input type="number" id="id" name="id" hidden="hidden" />
+                <div class="form-group required">
+                  <label for="observacion" class="col-sm-4 control-label">Observación</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="observacion" name="observacion" placeholder="Observacion" required>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Salvar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>        
+            </form>          
+          </div>  
+        </div>
+        <!-- end MODAL EDITOR movimiento -->
+
+
+
+          <!-- MODAL EDITOR equipos  -->
+          <div class="modal fade" id="modal_plantilla_movimiento" tabindex="-1" role="dialog" aria-labelledby="editor-plantilla-mov-title">
+  
+          <div class="modal-dialog modal-lg" role="document">
+            <form class="modal-content form-horizontal" id="form-plantilla-mov">
+              <div class="modal-header">
+                 <h4 class="modal-title" id="editor-title">Exportar Plantilla Moviento</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              </div>
+              <div class="modal-body">
+                <input type="number" id="id" name="id" hidden="hidden" />
+                <div class="form-group required">
+                  <label for="local_destino" class="col-sm-4 control-label">DEPARTAMENTO DESTINO</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="local_destino" name="local_destino" placeholder="Local Destino" readonly="readonly">
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label for="no_submayor" class="col-sm-4 control-label">NO. SUBMAYOR</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="no_submayor" name="no_submayor" placeholder="No Submayor"  >
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label for="nombre_equipo" class="col-sm-4 control-label">NOMBRE DE EQUIPO</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="nombre_equipo" name="nombre_equipo" placeholder="Nombre Equipo" >
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label for="sello" class="col-sm-4 control-label">SELLO</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="sello" name="sello" placeholder="Sello" >
+                  </div>
+                </div>
+
+                
+
+                <div class="form-group required">
+                  <label for="observacion" class="col-sm-4 control-label">Observación</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="observacion" name="observacion" placeholder="Observacion" >
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>        
+            </form>          
+          </div>  
+        </div>
+        <!-- end MODAL EDITOR equipos -->
+
+
+    </div>
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+          <div class="card">            
+            <div class="card-body">  
+              <div class="d-flex">                  
+                <h4 class="card-title"><span class="lstick"></span>LISTADO MOVIMIENTO AFT </h4>
+              </div>
+              <table id="table_movimiento_aft" class="table table-hover table_movimiento_aft" data-height="400" >  
+
+                <div class="d-flex">                          
+                        <div class="ml-auto">
+                            <div class="form-group">
+                                <input class="form-control" id="buscar_movimiento_aft" type="text" placeholder="Buscar AFT..">
+                            </div>
+                        </div>
+                </div>
+
+              </table>  
+                           
+            </div>
+          </div>
+
+            
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+          <div class="card">
+            <div class="card-body"> 
+                <div class="d-flex">                  
+                  <h4 class="card-title"><span class="lstick"></span>LISTADO MOVIMIENTO PIEZAS </h4>
+                </div> 
+                <table  id="table_movimiento_pieza" class="table table-hover table_movimiento_pieza" data-toggle="table" data-height="450" >      
+                      
+                    <div class="d-flex">                          
+                          <div class="ml-auto">
+                              <div class="form-group">
+                                  <input class="form-control" id="buscar_movimiento" type="text" placeholder="Buscar Pieza..">
+                              </div>
+                          </div>
+                    </div>
+                  
+                    
+                  </table>  
+
+                </br>
+
+                           
+            </div>
+          </div>
+
+            
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+     {% include 'InformaticaBundle:include:footer.html.twig' %}
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+  </div>
+
+  
+  
+
+  </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    
+
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/admin/adminpro/assets/plugins/moment/moment.js')}}"></script>  
+     <!--Custom JavaScript -->
+    <script type="text/javascript" src="{{asset('bundles/admin/adminpro/horizontal/js/custom.min.js')}}"></script> 
+        
+
+    <!-- Footable -->
+    <script type="text/javascript" src="{{asset('bundles/admin/adminpro/assets/plugins/footable3/footable-standalone/js/footable.min.js')}}"></script>
+
+    <script  src="{{asset('bundles/admin/adminpro/assets/plugins/jquery-confirm-v3.3.0/js/jquery-confirm.js')}}"></script>
+
+    <script type="text/javascript" charset="utf-8" async defer>
+
+    $(window).on('load', function() {
+
+
+      $(".table_movimiento_aft").on('click', ".modal_plantilla_movimiento", function(){
+
+        id_mov = $(this).attr('data-id');
+
+        $.post('{{path('listado_movimiento')}}', { 'action': 'exportar_movimiento_aft', 'id_mov': id_mov }).done(function (datos) { 
+
+            $("#modal_plantilla_movimiento").modal('show');
+
+        }).fail(function () { alerta_error();});
+               
+        
+
+      });
+
+          
+          var $modal = $('#editor-movimientoaft'),
+          $editor = $('#form-movimientoaft'),
+          $editorTitle = $('#editor-movimientoaft-title'),
+          ft = FooTable.init('#table_movimiento_aft', {
+
+            columns: [
+                  {"name":"id","title":"ID", "type":"number","breakpoints":"xs sm"},
+                  {"name":"equipo","title":"Equipo", "breakpoints":"xs sm"},
+                  {"name":"fecha","title":"FECHA", "type":"date","breakpoints":"xs sm"},
+                  {"name":"medio_basico","title":"MEDIO BÁSICO", "type":"number","breakpoints":"all"},
+                  {"name":"no_submayor","title":"NO. SUBMAYOR", "type":"number","breakpoints":"all"},
+                  {"name":"responsable_origen","title":"RESPONSABLE ORIGEN", "breakpoints":"all"},
+                  {"name":"local_origen","title":"DEPARTAMENTO ORIGEN", "breakpoints":"all"},
+                  {"name":"responsable_destino","title":"RESPONSABLE DESTINO", "breakpoints":"all"},
+                  {"name":"local_destino","title":"DEPARTAMENTO DESTINO", "breakpoints":"all"},
+                  {"name":"usuario","title":"USUARIO", "breakpoints":"all"},
+                  {"name":"observacion","title":"OBSERVACION", "breakpoints":"xs sm"},
+                  {"name":"edit","title":"....", "breakpoints":"xs sm"}
+              ],
+              rows: $.post('{{path('listado_movimiento')}}', { 'action': 'rows_aft' }).fail(function () { alerta_error();}),
+              editing: {
+                enabled: true,               
+                editRow: function(row){
+                  var values = row.val();
+                  $editor.find('#id').val(values.id);
+                  $editor.find('#observacion').val(values.observacion);
+
+                  $modal.data('row', row);
+                  $editorTitle.text('Editar Movimiento AFT ');
+                  $modal.modal('show');
+                },
+                deleteRow: function(row){
+                    $.confirm({
+                    title: 'Movimiento Pieza!',
+                    content: 'Seguro desea eliminar el Movimiento de AFT? ',
+                    icon: 'fa fa-question-circle',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    opacity: 0.5,
+                    buttons: {
+                        'confirm': {
+                            text: 'Eliminar',
+                            btnClass: 'btn-red',
+                            action: function () {   
+                            $.post('{{path('listado_movimiento')}}', { 'action': 'eliminar_movimiento_aft', 'id': id  })
+                                        .done(function (d) {  
+                                          row.delete();
+
+                                          if (d == true){
+                                            $.alert({
+                                                title: 'Mensaje',
+                                                content: 'Se eliminó corectamente el movimiento de AFT',
+                                                type: 'blue',
+                                                animation: 'scale',
+                                                draggable: true,
+                                            });
+                                          }                                          
+                                        }).fail(function () {
+                                          alerta_error();
+                                      });                                
+                            }
+                        },
+                        cancel: function () {
+                            $.alert('El eliminar Movimiento de AFT fue cancelado!');
+                        }
+                       }
+                        });
+                  
+                }
+              }
+          });
+
+          $editor.on('submit', function(e){
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+            var row = $modal.data('row'),
+                values = {
+                  id: $editor.find('#id').val(),     
+                  observacion: $editor.find('#observacion').val()
+                };
+
+                if (row instanceof FooTable.Row){
+                  row.val(values);
+                  $.post('{{path('listado_movimiento')}}', { 'action': 'editar_movimiento_aft', 'movimiento': values }).fail(function () { alerta_error();});
+                } 
+                $modal.modal('hide');
+          });
+
+
+       
+
+          // movimiento parte y Piezas
+
+          var $modal = $('#editor-movimiento'),
+          $editor = $('#form-movimiento'),
+          $editorTitle = $('#editor-movimiento-title'),
+          ft = FooTable.init('#table_movimiento_pieza', {
+
+            columns: [
+                  {"name":"id","title":"ID", "type":"number","breakpoints":"xs sm"},
+                  {"name":"fecha","title":"FECHA", "type":"date","breakpoints":"xs sm"},
+                  {"name":"pieza","title":"PIEZA", "breakpoints":"xs sm" },
+                  {"name":"marca","title":"MARCA", "breakpoints":"all"},
+                  {"name":"modelo","title":"MODLEO", "breakpoints":"all"},
+                  {"name":"serial","title":"SERIAL", "breakpoints":"all"},
+                  {"name":"ctecnica","title":"CTECNICA", "breakpoints":"all"},
+                  {"name":"tipo_movimiento","title":"TIPO MOVIMIENTO", "breakpoints":"all"},
+                  {"name":"factura","title":"FACTURA", "breakpoints":"all"},
+                  {"name":"usuario","title":"USUARIO", "breakpoints":"all"},
+                  {"name":"tipo_equipo","title":"TIPO EQUIPO", "breakpoints":"xs sm"},
+                  {"name":"equipo_origen","title":"EQUIPO ORIGEN", "breakpoints":"xs sm"},
+                  {"name":"equipo_destino","title":"EQUIPO DESTINO", "breakpoints":"xs sm"},
+                  {"name":"observacion","title":"OBSERVACION", "breakpoints":"xs sm"}
+              ],
+              rows: $.post('{{path('listado_movimiento')}}', { 'action': 'rows' }).fail(function () { alerta_error();}),
+              editing: {
+                enabled: true,               
+                editRow: function(row){
+                  var values = row.val();
+                  $editor.find('#id').val(values.id);
+                  $editor.find('#observacion').val(values.observacion);
+                  $modal.data('row', row);
+                  $editorTitle.text('Editar Movimiento Pieza ');
+                  $modal.modal('show');
+                },
+                deleteRow: function(row){
+
+                    $.confirm({
+                    title: 'Movimiento Pieza!',
+                    content: 'Seguro desea eliminar el Movimiento de Pieza? ',
+                    icon: 'fa fa-question-circle',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    opacity: 0.5,
+                    buttons: {
+                        'confirm': {
+                            text: 'Eliminar',
+                            btnClass: 'btn-red',
+                            action: function () {   
+                            $.post('{{path('listado_movimiento')}}', { 'action': 'eliminar_movimiento', 'id': id  })
+                                        .done(function (d) {  
+                                          row.delete();
+
+                                          if (d == true){
+                                            $.alert({
+                                                title: 'Mensaje',
+                                                content: 'Se eliminó corectamente el movimiento de la Pieza',
+                                                type: 'blue',
+                                                animation: 'scale',
+                                                draggable: true,
+                                            });
+                                          }                                          
+                                        }).fail(function () {
+                                          alerta_error();
+                                      });                                
+                            }
+                        },
+                        cancel: function () {
+                            $.alert('El eliminar Movimiento de la Pieza fue cancelado!');
+                        }
+                       }
+                        });
+                  
+                }
+              }
+          });
+
+          $editor.on('submit', function(e){
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+            var row = $modal.data('row'),
+                values = {
+                  id: $editor.find('#id').val(),     
+                  observacion: $editor.find('#observacion').val()
+                };
+
+                if (row instanceof FooTable.Row){
+                  row.val(values);
+                  $.post('{{path('listado_movimiento')}}', { 'action': 'editar_movimiento', 'movimiento': values }).fail(function () { alerta_error();});
+                } 
+                $modal.modal('hide');
+          });
+
+                
+
+        
+
+        function alerta_error(){
+         $.alert({
+              title: 'Error',
+              icon: 'fa fa-warning',
+              type: 'red',
+              content: 'Algo salió mal, por favor vuelva a intentarlo'                      
+          });
+        }
+
+        // filtrar tabla movimiento
+        $('#buscar_movimiento').on('keyup',function(){
+          var that = this, $allListElements = $('#table_movimiento_pieza').find('tr');
+          var $matchingListElements = $allListElements.filter(function(i, li){
+          var listItemText = $(li).text().toUpperCase(),
+          searchText = that.value.toUpperCase();
+          return ~listItemText.indexOf(searchText);
+          });
+          $allListElements.hide();
+          $matchingListElements.show();
+        });
+
+        // filtrar tabla
+        $('#buscar_movimiento_aft').on('keyup',function(){
+          var that = this, $allListElements = $('#table_movimiento_aft').find('tr');
+          var $matchingListElements = $allListElements.filter(function(i, li){
+          var listItemText = $(li).text().toUpperCase(),
+          searchText = that.value.toUpperCase();
+          return ~listItemText.indexOf(searchText);
+          });
+          $allListElements.hide();
+          $matchingListElements.show();
+        });
+
+        // end document
+      });  
+        
+
+
+              
+      
+
+   </script>
+
+{% endblock %}
+

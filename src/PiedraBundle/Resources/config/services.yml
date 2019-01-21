@@ -1,0 +1,4 @@
+services:
+#    piedra.example:
+#        class: PiedraBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

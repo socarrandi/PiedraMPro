@@ -1,0 +1,132 @@
+### DEPARTAMANTOS ##
+adicionar_departamento:
+    path:     /adicionar_departamento
+    defaults: { _controller: PiedraBundle:Default:adicionarDepartamento }
+
+
+inventario_departamento:
+    path:     /inventario_departamento/{idD}
+    defaults: { _controller: PiedraBundle:Default:inventarioDepartamento }    
+
+
+adicionar_inventario_null:
+    path:     /adicionar_inventario_null/{idD}
+    defaults: { _controller: PiedraBundle:Default:adicionarInventarioNull }   
+
+##### PC #####
+
+adicionar_pc:
+    path:     /adicionar_pc
+    defaults: { _controller: PiedraBundle:Default:adicionarPc }
+
+
+inventario_pc:
+    path:     /inventario_pc/{idPc}
+    defaults: { _controller: PiedraBundle:Default:inventarioPc }
+
+######## DOCUMENTOS ######
+
+adicionar_documento:
+    path:      /adicionar_documento
+    defaults:  { _controller: PiedraBundle:Default:adicionarDocumento }
+
+####### TELEFONOS ###########
+
+gestionar_telefono:
+    path:      /gestionar_telefono
+    defaults:  { _controller: PiedraBundle:Default:gestionarTelefono }
+
+####### contrasenna ##########
+
+adicionar_password_setup:
+    path:      /adicionar_password_setup
+    defaults:  { _controller: PiedraBundle:Default:adicionarPasswordSetup }
+
+##### gestion baja ######
+
+inventario_baja:
+    path:      /inventario_baja
+    defaults:  { _controller: PiedraBundle:Default:inventarioBaja }
+
+
+baja_usuario_dominio:
+    path:      /baja_usuario_dominio
+    defaults:  { _controller: PiedraBundle:Default:bajaUsuarioDominio }
+
+####### Gestion Usuario Dominio 
+
+gestionar_usuario_dominio:
+    path:     /gestionar_usuario_dominio
+    defaults: { _controller: PiedraBundle:Default:gestionarUsuarioDominio }
+
+
+########## GESTIONAR NOMENCLADORES
+
+gestionar_usuario_red:
+    path:     /gestionar_usuario_red
+    defaults: { _controller: PiedraBundle:Default:gestionarUsuarioRed }
+
+gestionar_correo:
+    path:     /gestionar_correo
+    defaults: { _controller: PiedraBundle:Default:gestionarCorreo }
+
+gestionar_cargo:
+    path:     /gestionar_cargo
+    defaults: { _controller: PiedraBundle:Default:gestionarCargo }
+
+
+######  AJAX #######
+
+lista_pc_ajax:
+    path:     /lista_pc_ajax
+    defaults: { _controller: PiedraBundle:Default:listaPcAjax }
+    
+lista_usuario_red_ajax:
+    path:     /lista_usuario_red_ajax
+    defaults: { _controller: PiedraBundle:Default:listaUsuarioRedAjax }        
+
+usuario_dominio_checkbox_ajax:
+    path:     /usuario_dominio_checkbox_ajax
+    defaults: { _controller: PiedraBundle:Default:usuarioDominioCheckboxAjax }
+
+correo_checkbox_ajax:
+    path:     /correo_checkbox_ajax
+    defaults: { _controller: PiedraBundle:Default:correoCheckboxAjax }
+
+telefono_checkbox_ajax:
+    path:     /telefono_checkbox_ajax
+    defaults: { _controller: PiedraBundle:Default:telefonoCheckboxAjax }
+
+password_setups_checkbox_ajax:
+    path:     /password_setups_checkox_ajax
+    defaults: { _controller: PiedraBundle:Default:passwordSetupsCheckboxAjax }
+
+
+
+############ exportar word
+
+exportar_usuario_nominal:
+    path:     /exportar_usuario_nominal
+    defaults: { _controller: PiedraBundle:ExportarWord:exportarUsuarioNominal }
+
+#exportar_listado_nominal_usuario:
+   # path:     /exportar_listado_nominal_usuario
+   # defaults: { _controller: PiedraBundle:ExportarWord:exportarListadoNominalUsuario }
+
+exportar_listado_password_setup:
+    path:     /exportar_listado_password_setup
+    defaults: { _controller: PiedraBundle:ExportarWord:exportarListadoPasswordSetup }
+
+#exportar_solicitud_asignacion_serv_inf:
+  #  path:     /exportar_solicitud_asignacion_serv_inf/{idUd}
+  #  defaults: { _controller: PiedraBundle:ExportarWord:exportarSolicitudAsignacionServInf }
+
+exportar_correo_admin:
+    path:     /exportar_correo_admin
+    defaults: { _controller: PiedraBundle:ExportarWord:exportarCorreoAdmin }
+
+exportar_correos:
+    path:     /exportar_correos
+    defaults: { _controller: PiedraBundle:ExportarWord:exportarCorreos }
+
+

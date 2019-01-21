@@ -1,0 +1,287 @@
+<?php
+
+namespace InformaticaBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Conexion
+ *
+ * @ORM\Table(name="conexion")
+ * @ORM\Entity(repositoryClass="InformaticaBundle\Repository\ConexionRepository")
+ */
+class Conexion
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=20)
+     */
+    private $tipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="driver", type="string", length=20)
+     */
+    private $driver;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user", type="string", length=20)
+     */
+    private $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=40)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="host", type="string", length=40)
+     */
+    private $host;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="port", type="string", length=10)
+     */
+    private $port;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dbname", type="string", length=50)
+     */
+    private $dbname;
+
+    /**     
+     *@ORM\ManyToOne(targetEntity="InformaticaBundle\Entity\Unidad")
+     *@ORM\JoinColumn(name="unidad_id", referencedColumnName="id")
+     **/
+    private $unidad;
+
+    public function __construct(){
+        $this->driver = 'pdo_sqlsrv';        
+    }
+
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     *
+     * @return Conexion
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set driver
+     *
+     * @param string $driver
+     *
+     * @return Conexion
+     */
+    public function setDriver($driver)
+    {
+        $this->driver = $driver;
+
+        return $this;
+    }
+
+    /**
+     * Get driver
+     *
+     * @return string
+     */
+    public function getDriver()
+    {
+        return $this->driver;
+    }
+
+    /**
+     * Set user
+     *
+     * @param string $user
+     *
+     * @return Conexion
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return Conexion
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set host
+     *
+     * @param string $host
+     *
+     * @return Conexion
+     */
+    public function setHost($host)
+    {
+        $this->host = $host;
+
+        return $this;
+    }
+
+    /**
+     * Get host
+     *
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * Set port
+     *
+     * @param integer $port
+     *
+     * @return Conexion
+     */
+    public function setPort($port)
+    {
+        $this->port = $port;
+
+        return $this;
+    }
+
+    /**
+     * Get port
+     *
+     * @return int
+     */
+    public function getPort()
+    {
+        return $this->port;
+    }
+
+    /**
+     * Set dbname
+     *
+     * @param string $dbname
+     *
+     * @return Conexion
+     */
+    public function setDbname($dbname)
+    {
+        $this->dbname = $dbname;
+
+        return $this;
+    }
+
+    /**
+     * Get dbname
+     *
+     * @return string
+     */
+    public function getDbname()
+    {
+        return $this->dbname;
+    }
+
+    /**
+     * Set unidad
+     *
+     * @param \InformaticaBundle\Entity\Unidad $unidad
+     *
+     * @return Equipo
+     */
+    public function setUnidad(\InformaticaBundle\Entity\Unidad $unidad = null)
+    {
+        $this->unidad = $unidad;
+
+        return $this;
+    }
+
+    /**
+     * Get unidad
+     *
+     * @return \InformaticaBundle\Entity\Unidad
+     */
+    public function getUnidad()
+    {
+        return $this->unidad;
+    }
+}
+

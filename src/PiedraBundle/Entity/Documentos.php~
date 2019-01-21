@@ -1,0 +1,224 @@
+<?php
+
+namespace PiedraBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Documentos
+ *
+ * @ORM\Table(name="documentos")
+ * @ORM\Entity(repositoryClass="PiedraBundle\Repository\DocumentosRepository")
+ */
+class Documentos
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_doc", type="string", length=255)
+     */
+    private $nombreDoc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=255)
+     */
+    private $descripcion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dirArchivo", type="string", length=255)
+     */
+    private $dirArchivo;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="imgTipoArchivo", type="text")
+     */
+    private $imgArchivo;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime")
+     */
+    private $fecha;
+
+    /**     
+     *@ORM\ManyToOne(targetEntity="PiedraBundle\Entity\Organismo")
+     *@ORM\JoinColumn(name="organismo_id", referencedColumnName="id")
+     **/
+    private $organismo;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     *
+     * @return Documentos
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set dirArchivo
+     *
+     * @param string $dirArchivo
+     *
+     * @return Documentos
+     */
+    public function setDirArchivo($dirArchivo)
+    {
+        $this->dirArchivo = $dirArchivo;
+
+        return $this;
+    }
+
+    /**
+     * Get dirArchivo
+     *
+     * @return string
+     */
+    public function getDirArchivo()
+    {
+        return $this->dirArchivo;
+    }
+
+    
+    
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     *
+     * @return Documentos
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    
+
+    /**
+     * Set organismo
+     *
+     * @param \PiedraBundle\Entity\Organismo $organismo
+     *
+     * @return Documentos
+     */
+    public function setOrganismo(\PiedraBundle\Entity\Organismo $organismo = null)
+    {
+        $this->organismo = $organismo;
+
+        return $this;
+    }
+
+    /**
+     * Get organismo
+     *
+     * @return \PiedraBundle\Entity\Organismo
+     */
+    public function getOrganismo()
+    {
+        return $this->organismo;
+    }
+
+    /**
+     * Set imgArchivo
+     *
+     * @param string $imgArchivo
+     *
+     * @return Documentos
+     */
+    public function setImgArchivo($imgArchivo)
+    {
+        $this->imgArchivo = $imgArchivo;
+
+        return $this;
+    }
+
+    /**
+     * Get imgArchivo
+     *
+     * @return string
+     */
+    public function getImgArchivo()
+    {
+        return $this->imgArchivo;
+    }
+
+    /**
+     * Set nombreDoc
+     *
+     * @param string $nombreDoc
+     *
+     * @return Documentos
+     */
+    public function setNombreDoc($nombreDoc)
+    {
+        $this->nombreDoc = $nombreDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreDoc
+     *
+     * @return string
+     */
+    public function getNombreDoc()
+    {
+        return $this->nombreDoc;
+    }
+}

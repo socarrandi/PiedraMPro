@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} HOME {% endblock %}
+
+{% block stylesheets %}
+    <!-- BEGIN PAGE LEVEL STYLES -->
+   
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock %}
+
+
+
+{% block body %}
+
+  {% include 'PiedraBundle:include:header.html.twig' %}
+
+  <!-- END HEADER -->
+  <div class="clearfix"></div>
+  <!-- BEGIN CONTAINER -->
+  <div class="page-container">
+    
+
+  {% include 'PiedraBundle:include:sidebar.html.twig' %}
+
+
+
+  <div class="page-content-wrapper">
+    <div class="page-content">
+           
+      <div class="row">
+        <div class="col-md-12">
+         
+         	Bienvenido
+        </div>
+      </div>
+      <!-- END PAGE CONTENT -->
+    </div>
+  </div>
+
+  </div>
+
+
+
+{% endblock %}
+
+
+
+
